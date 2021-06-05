@@ -1,4 +1,4 @@
-# MinhaLoja
+# MinhaLoja - Back end
 MinhaLoja tem por intuito demonstrar uma opção para criação de um back-end para o seu sistema. Construída utilizando diversos padrões de mercado, e principalmente valendo-se dos conceitos do DDD para uma melhor organização das implementações de regras de negócio. Código que tem por base a plataforma .NET e linguagem C#.
 
 ### Organização Código
