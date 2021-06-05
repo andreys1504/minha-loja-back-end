@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MinhaLoja.Core\MinhaLoja.Core.csproj" />
+		<ProjectReference Include="..\MinhaLoja.Infra.Api.Identity\MinhaLoja.Infra.Api.Identity.csproj" />
+		<ProjectReference Include="..\MinhaLoja.Infra.Data\MinhaLoja.Infra.Data.csproj" />
+		<ProjectReference Include="..\MinhaLoja.Infra.ServiceBus\MinhaLoja.Infra.ServiceBus.csproj" />
+		<ProjectReference Include="..\MinhaLoja.Infra.Services\MinhaLoja.Infra.Services.csproj" />
+	</ItemGroup>
+
+</Project>

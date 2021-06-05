@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NetDevPack.Security.Jwt.AspNetCore" Version="5.0.9" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+		<PackageReference Include="NetDevPack.Security.Jwt.Store.EntityFrameworkCore" Version="5.0.9" />
+		<PackageReference Include="System.Security.Claims" Version="4.3.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MinhaLoja.Core\MinhaLoja.Core.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+    banco-dados:
+        image: "mcr.microsoft.com/mssql/server:2019-latest"
+        container_name: minha-loja-banco-dados
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=Pass@Word1
+        ports:
+            - 4666:1433
+        volumes: 
+            - c:\dev\sql-server\Docker\MinhaLoja\data:/var/opt/mssql/data
+            - c:\dev\sql-server\Docker\MinhaLoja\log:/var/opt/mssql/log
+        networks:
+            - back-end-minha-loja-network
+            
+    banco-dados-secundario:
+        image: "mongo"
+        container_name: minha-loja-banco-dados-secundario
+        restart: always
+        ports:
+            - 27018:27017
+        networks:
+            - back-end-minha-loja-network
+    
+    storage:
+        image: "mcr.microsoft.com/azure-storage/azurite"
+        container_name: minha-loja-storage
+        ports:
+            - 10010:10000
+            - 10011:10001
+        volumes:
+            - c:\dev\azurite\MinhaLoja:/data
+        networks:
+            - back-end-minha-loja-network
+            
+    banco-dados-staging:
+        image: redis:6.2.2
+        container_name: minha-loja-banco-dados-staging
+        ports:
+            - 6070:6379
+        volumes:
+            - c:\dev\redis\Docker\MinhaLoja\data:/data
+        networks:
+            - back-end-minha-loja-network
+networks: 
+  back-end-minha-loja-network:
+    driver: bridge

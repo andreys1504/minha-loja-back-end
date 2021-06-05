@@ -1,0 +1,17 @@
+
+**/.vs/
+**/bin/
+**/obj/
+
+**/MinhaLoja.Api.Loja/
+**/MinhaLoja.ConsoleAppTests/
+**/MinhaLoja.Worker.ErrorApplication1/
+
+**/appsettings.json
+
+
+
+
+
+
+

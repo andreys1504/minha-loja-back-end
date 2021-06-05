@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>dotnet-MinhaLoja.Worker.DomainEventsReceiver-C69CBD4D-2887-4C49-878F-E68AF43B4B8D</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.17.0" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="5.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MinhaLoja.Core\MinhaLoja.Core.csproj" />
+    <ProjectReference Include="..\MinhaLoja.Infra.Ioc\MinhaLoja.Infra.Ioc.csproj" />
+  </ItemGroup>
+</Project>
