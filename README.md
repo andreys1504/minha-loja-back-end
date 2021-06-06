@@ -45,6 +45,14 @@ via terminal: docker-compose up -d
 - appsettings.json
 utilizar appsettings.EXAMPLE.json para a criação das configurações em Apis e Works.
 
+### Migrations
+- executar migrations em: 
+src\MinhaLoja.Infra.Data (Update-Database -Context MinhaLojaContext)
+src\MinhaLoja.Infra.Api.Identity (Update-Database -Context IdentityMinhaLojaContext) 
+
+### Requisições Api
+'MinhaLoja - AdminLoja.postman_collection.json' contém as configurações para realização de requisições via Postman.
+
 ### Regras de Negócio
 - Possibilitar que vendedores possam se cadastrar e anunciar seus produtos.
 - Também haverá a possibilidade de se cadastrar Marcas e Tipo de Produtos (Eletrodoméstico, Refrigerador, TV, etc.).
