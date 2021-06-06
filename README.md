@@ -47,7 +47,9 @@ utilizar appsettings.EXAMPLE.json para a criação das configurações em Apis e
 
 ### Migrations
 - executar migrations em: 
+
 src\MinhaLoja.Infra.Data (Update-Database -Context MinhaLojaContext)
+
 src\MinhaLoja.Infra.Api.Identity (Update-Database -Context IdentityMinhaLojaContext) 
 
 ### Requisições Api
