@@ -1,0 +1,315 @@
+{
+	"info": {
+		"_postman_id": "f2a0858c-d980-4fdc-b435-d61978d275db",
+		"name": "MinhaLoja - AdminLoja",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "conta-usuario",
+			"item": [
+				{
+					"name": "conta-usuario/cadastrar-usuario-master",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Nome\": \"Andrey master\",\r\n    \"Username\": \"andreys1504\",\r\n    \"Senha\": \"andrey**\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44353/conta-usuario/cadastrar-usuario-master",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"conta-usuario",
+								"cadastrar-usuario-master"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "conta-usuario/cadastrar-vendedor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"andrey mariano\",\r\n    \"email\": \"andreys1504@gmail.com\",\r\n    \"senha\": \"andrey7894\",\r\n    \"cnpj\": \"88443632000170\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44353/conta-usuario/cadastrar-vendedor",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"conta-usuario",
+								"cadastrar-vendedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "conta-usuario/validar-email-vendedor/{codigo}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44353/conta-usuario/validar-email-vendedor/965952",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"conta-usuario",
+								"validar-email-vendedor",
+								"965952"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "conta-usuario/aprovacao-cadastro-vendedor/{tipo}/{idVendedor}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsImtpZCI6IjVVaEcyWkd5TEx5c1hOQ0pqUWRJX0EiLCJ0eXAiOiJKV1QifQ.eyJJZCI6IjgiLCJ1bmlxdWVfbmFtZSI6ImFuZHJleXMxNTA0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy91c2VyZGF0YSI6IntcIklkVXN1YXJpb1wiOjgsXCJOb21lXCI6XCJBbmRyZXkgbWFzdGVyXCIsXCJVc2VybmFtZVwiOlwiYW5kcmV5czE1MDRcIixcIlBlcm1pc3Npb25zXCI6W1wiVXN1YXJpb01hc3RlclwiXX0iLCJVc3VhcmlvTWFzdGVyIjoidHJ1ZSIsIm5iZiI6MTYyMTcyMDM3NywiZXhwIjoxNjIxNzIzOTc3LCJpYXQiOjE2MjE3MjAzNzcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzAxIn0.H7TmDtFmAch90kHc_PgIYDPjsCWXVQ1QSKaF0D0tIAK6W78KFMTIpQY9zeBR2Gcb_JCq4AtORXM4j-scCfJpdQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44353/conta-usuario/aprovacao-cadastro-vendedor/aprovar/7",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"conta-usuario",
+								"aprovacao-cadastro-vendedor",
+								"aprovar",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "account-admin-loja/authenticate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"andreys1504@gmail.com\",\r\n    \"password\": \"andrey7894\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44301/account-admin-loja/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44301",
+							"path": [
+								"account-admin-loja",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "account-admin-loja/authenticate (2)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"andreys1504\",\r\n    \"password\": \"andrey**\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44301/account-admin-loja/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44301",
+							"path": [
+								"account-admin-loja",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "marca",
+			"item": [
+				{
+					"name": "marca/cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsImtpZCI6IkxVVjg2ZGNMZ3pMb2VhSFdkSHFpTFEiLCJ0eXAiOiJKV1QifQ.eyJJZCI6IjEiLCJ1bmlxdWVfbmFtZSI6ImFuZHJleXMxNTA0QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdXNlcmRhdGEiOiJ7XCJJZFVzdWFyaW9cIjoxLFwiTm9tZVwiOlwiYW5kcmV5IG1hcmlhbm9cIixcIlVzZXJuYW1lXCI6XCJhbmRyZXlzMTUwNEBnbWFpbC5jb21cIn0iLCJuYmYiOjE2MjE2MjIyMDQsImV4cCI6MTYyMTYyNTgwNCwiaWF0IjoxNjIxNjIyMjA0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMwMSJ9.wLXVAXtcUODzvmLEAk5E71heEFvIkFuj4Qa7P8k-FkE_AyynN46RYPSXcLLY5HUEmtlz5aQLdJwQdOEvR8TOqg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nomeMarca\": \"Volkswagem\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44353/marca/cadastrar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"marca",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tipo-produto",
+			"item": [
+				{
+					"name": "tipo-produto/cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsImtpZCI6IkxVVjg2ZGNMZ3pMb2VhSFdkSHFpTFEiLCJ0eXAiOiJKV1QifQ.eyJJZCI6IjEiLCJ1bmlxdWVfbmFtZSI6ImFuZHJleXMxNTA0QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdXNlcmRhdGEiOiJ7XCJJZFVzdWFyaW9cIjoxLFwiTm9tZVwiOlwiYW5kcmV5IG1hcmlhbm9cIixcIlVzZXJuYW1lXCI6XCJhbmRyZXlzMTUwNEBnbWFpbC5jb21cIn0iLCJuYmYiOjE2MjE2MjIyMDQsImV4cCI6MTYyMTYyNTgwNCwiaWF0IjoxNjIxNjIyMjA0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMwMSJ9.wLXVAXtcUODzvmLEAk5E71heEFvIkFuj4Qa7P8k-FkE_AyynN46RYPSXcLLY5HUEmtlz5aQLdJwQdOEvR8TOqg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NomeTipoProduto\": \"Carro\",\r\n    \"IdTipoProdutoSuperior\": 1,\r\n    \"CaracteristicasTipoProduto\": [\r\n        {\r\n            \"nome\": \"Quantidade de portas\",\r\n            \"observacao\": \"\"\r\n        },\r\n        {\r\n            \"nome\": \"Flex\",\r\n            \"observacao\": \"\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44353/tipo-produto/cadastrar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"tipo-produto",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "produto",
+			"item": [
+				{
+					"name": "produto/cadastrar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsImtpZCI6IkxVVjg2ZGNMZ3pMb2VhSFdkSHFpTFEiLCJ0eXAiOiJKV1QifQ.eyJJZCI6IjEiLCJ1bmlxdWVfbmFtZSI6ImFuZHJleXMxNTA0QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdXNlcmRhdGEiOiJ7XCJJZFVzdWFyaW9cIjoxLFwiTm9tZVwiOlwiYW5kcmV5IG1hcmlhbm9cIixcIlVzZXJuYW1lXCI6XCJhbmRyZXlzMTUwNEBnbWFpbC5jb21cIn0iLCJuYmYiOjE2MjE2MjIyMDQsImV4cCI6MTYyMTYyNTgwNCwiaWF0IjoxNjIxNjIyMjA0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMwMSJ9.wLXVAXtcUODzvmLEAk5E71heEFvIkFuj4Qa7P8k-FkE_AyynN46RYPSXcLLY5HUEmtlz5aQLdJwQdOEvR8TOqg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"NomeProduto\": \"Volkswagem Golf 1.0 2021/2021\",\r\n    \"Valor\": 43560.66,\r\n    \"IdMarca\": 1,\r\n    \"DescricaoProduto\": \"Gol 1.0 MPI , 4 portas ( cód. 5U7TA4), ano/modelo 2021/2022, à vista a partir de R$ 56.760,00 ou financiado com entrada de R$ 28.500,00 (50,21%) e mais 48 prestações mensais de R$ 779,02. Taxa de juros: 0,99% a.m. e 12,55% a.a. Total da operação: R$66.818,25. CET máximo para esta operação: 1,21% a.a. Condições válidas para financiamento pelo Banco Volkswagen .Oferta válida exclusivamente no período de 01/05/2021 a 31/05/2021.\",\r\n    \"IdExterno\": \"\",\r\n    \"IdTipoProduto\": 2,\r\n    \"CaracteristicasProduto\": [\r\n        {\r\n            \"IdCaracteristicaProduto\": 2,\r\n            \"Descricao\": \"5\"\r\n        },\r\n        {\r\n            \"IdCaracteristicaProduto\": 3,\r\n            \"Descricao\": \"Sim\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44353/produto/cadastrar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44353",
+							"path": [
+								"produto",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
