@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace MinhaLoja.Core.Domain.ApplicationServices.Response
 {
-    public class ResponseService<TDataResponse> : IResponseService<TDataResponse>
+    public class ResponseAppService<TDataResponse> : IResponseAppService<TDataResponse>
     {
-        protected ResponseService()
+        protected ResponseAppService()
         {
         }
 
-        public ResponseService(
+        public ResponseAppService(
             TDataResponse data, 
             PagedDataResponseService pagination = null)
         {
@@ -19,13 +19,13 @@ namespace MinhaLoja.Core.Domain.ApplicationServices.Response
             Pagination = pagination;
         }
 
-        public ResponseService(IList<Notification> notifications)
+        public ResponseAppService(IList<Notification> notifications)
         {
             Success = false;
             Notifications = notifications;
         }
 
-        public ResponseService(Notification notifications)
+        public ResponseAppService(Notification notifications)
         {
             Success = false;
             Notifications = new List<Notification> { notifications };

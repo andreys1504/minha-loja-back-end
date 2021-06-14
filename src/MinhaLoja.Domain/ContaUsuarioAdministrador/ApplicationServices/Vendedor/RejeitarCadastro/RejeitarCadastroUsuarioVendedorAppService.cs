@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.RejeicaoCadastro;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Repositories;
 using System.Linq;
@@ -11,7 +12,7 @@ using MensagensVendedor = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministra
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.RejeitarCadastro
 {
     public class RejeitarCadastroUsuarioVendedorAppService : AppService<bool>,
-        IRequestHandler<RejeitarCadastroUsuarioVendedorRequest, IResponseService<bool>>
+        IRequestHandler<RejeitarCadastroUsuarioVendedorRequest, IResponseAppService<bool>>
     {
         private readonly IVendedorRepository _vendedorRepository;
 
@@ -23,7 +24,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             _vendedorRepository = vendedorRepository;
         }
 
-        public async Task<IResponseService<bool>> Handle(
+        public async Task<IResponseAppService<bool>> Handle(
             RejeitarCadastroUsuarioVendedorRequest request,
             CancellationToken cancellationToken)
         {
@@ -32,7 +33,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
 
             Entities.Vendedor vendedor =
                 _vendedorRepository
-                    .GetEntity()
+                    .GetEntity(asNoTracking: false)
                     .FirstOrDefault(vendedor => vendedor.Id == request.IdVendedor);
 
             if (vendedor == null)
@@ -52,9 +53,11 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
                     ),
                     aggregateRoot: vendedor
                 );
+
+                return ReturnSuccess();
             }
 
-            return ReturnSuccess();
+            throw new DomainException("erro na realização da rejeição do cadastro do usuário Vendedor");
         }
     }
 }

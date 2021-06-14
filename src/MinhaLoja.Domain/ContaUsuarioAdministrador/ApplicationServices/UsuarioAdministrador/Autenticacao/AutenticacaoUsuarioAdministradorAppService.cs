@@ -2,6 +2,7 @@
 using MinhaLoja.Core.Authorizations;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.ValidacaoEmail;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Queries;
@@ -15,7 +16,7 @@ using MensagensUsuario = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministrad
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Autenticacao
 {
     public class AutenticacaoUsuarioAdministradorAppService : AppService<AutenticacaoUsuarioAdministradorDataResponse>,
-        IRequestHandler<AutenticacaoUsuarioAdministradorRequest, IResponseService<AutenticacaoUsuarioAdministradorDataResponse>>
+        IRequestHandler<AutenticacaoUsuarioAdministradorRequest, IResponseAppService<AutenticacaoUsuarioAdministradorDataResponse>>
     {
         private readonly IUsuarioAdministradorRepository _usuarioAdministradorRepository;
         private readonly GlobalSettings _globalSettings;
@@ -30,7 +31,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             _globalSettings = globalSettings;
         }
 
-        public async Task<IResponseService<AutenticacaoUsuarioAdministradorDataResponse>> Handle(
+        public async Task<IResponseAppService<AutenticacaoUsuarioAdministradorDataResponse>> Handle(
             AutenticacaoUsuarioAdministradorRequest request,
             CancellationToken cancellationToken)
         {
@@ -70,11 +71,13 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                                 emailVendedor: usuario.Vendedor.Email,
                                 codigoValidacaoEmail: novoCodigo
                             ),
-                                aggregateRoot: usuario
+                            aggregateRoot: usuario
                         );
+
+                        return ReturnNotification(nameof(usuario.Vendedor.EmailValidado), MensagensUsuario.Vendedor_ValidacaoEmail_Pendente);
                     }
 
-                    return ReturnNotification(nameof(usuario.Vendedor.EmailValidado), MensagensUsuario.Vendedor_ValidacaoEmail_Pendente);
+                    throw new DomainException("autenticação: E-mail não validado; Erro na geração do código de validação do E-mail");
                 }
 
                 if (usuario.Vendedor.CadastroUsuarioAprovacaoPendente())

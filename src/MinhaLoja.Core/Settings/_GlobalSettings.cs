@@ -8,7 +8,6 @@ namespace MinhaLoja.Core.Settings
         public string DatabaseConnectionString { get; set; }
         public string DatabaseSecondaryConnectionString { get; set; }
         public string DatabaseCacheConnectionString { get; set; }
-        public string SecretToken { get; set; }
         public string CurrentApplication { get; set; }
         public string SecretApplications { get; set; }
         public bool TriggerEmails { get; set; }

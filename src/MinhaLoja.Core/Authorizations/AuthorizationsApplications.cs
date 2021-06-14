@@ -7,7 +7,7 @@ namespace MinhaLoja.Core.Authorizations
         public class AdminLoja
         {
             public static List<string> GetAll
-                => new List<string>
+                => new()
                 {
                     UsuarioMaster,
                     UsuarioVendedor

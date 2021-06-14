@@ -3,7 +3,7 @@ using System;
 
 namespace MinhaLoja.Core.Domain.ApplicationServices.Request
 {
-    public interface IRequestService : IMessage
+    public interface IRequestAppService : IMessage
     {
         Guid RequestId { get; }
         DateTime Timestamp { get; }

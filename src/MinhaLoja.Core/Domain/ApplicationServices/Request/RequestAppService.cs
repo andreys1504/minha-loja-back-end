@@ -6,9 +6,9 @@ using System;
 
 namespace MinhaLoja.Core.Domain.ApplicationServices.Request
 {
-    public abstract class RequestService : Notifiable<Notification>, IRequestService
+    public abstract class RequestAppService : Notifiable<Notification>, IRequestAppService
     {
-        protected RequestService()
+        protected RequestAppService()
         {
             RequestId = Guid.NewGuid();
             Timestamp = DateTime.Now;

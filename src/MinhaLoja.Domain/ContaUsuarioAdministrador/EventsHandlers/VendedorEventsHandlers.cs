@@ -3,6 +3,7 @@ using MinhaLoja.Core.Domain.Events.EventHandler;
 using MinhaLoja.Core.Infra.Services.Mail;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.AprovacaoCadastro;
+using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.ExcluirVendedoresCadastroRejeitado;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.RejeicaoCadastro;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.ValidacaoEmail;
 using System.Threading;
@@ -15,7 +16,8 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.EventsHandlers
         INotificationHandler<CadastroVendedorAprovadoEvent>,
         INotificationHandler<CadastroVendedorRejeitadoEvent>,
         INotificationHandler<EmailUsuarioVendedorValidadoEvent>,
-        INotificationHandler<GeradoNovoCodigoValidacaoEmailVendedorEvent>
+        INotificationHandler<GeradoNovoCodigoValidacaoEmailVendedorEvent>,
+        INotificationHandler<VendedoresExcluidosPorCadastroRejeitadoEvent>
     {
         private readonly IMailService _mailService;
         private readonly GlobalSettings _globalSettings;
@@ -63,6 +65,11 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.EventsHandlers
                     codigoValidacaoEmail: notification.CodigoValidacaoEmail
                 )
             );
+        }
+
+        public Task Handle(VendedoresExcluidosPorCadastroRejeitadoEvent notification, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }

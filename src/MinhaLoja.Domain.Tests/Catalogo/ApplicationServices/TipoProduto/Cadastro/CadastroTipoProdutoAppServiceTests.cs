@@ -50,7 +50,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response = 
+            IResponseAppService<CadastroTipoProdutoDataResponse> response = 
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -108,7 +108,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response =
+            IResponseAppService<CadastroTipoProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -153,7 +153,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response =
+            IResponseAppService<CadastroTipoProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -194,7 +194,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response =
+            IResponseAppService<CadastroTipoProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -231,7 +231,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response =
+            IResponseAppService<CadastroTipoProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -262,7 +262,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response =
+            IResponseAppService<CadastroTipoProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -290,7 +290,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroTipoProdutoDataResponse> response =
+            IResponseAppService<CadastroTipoProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert

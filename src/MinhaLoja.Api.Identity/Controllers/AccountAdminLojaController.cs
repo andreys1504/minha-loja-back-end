@@ -22,7 +22,7 @@ namespace MinhaLoja.Api.Identity.Controllers
                 username: requestApi.Username,
                 senha: requestApi.Password);
 
-            var response = (IResponseService<AutenticacaoUsuarioAdministradorDataResponse>)
+            var response = (IResponseAppService<AutenticacaoUsuarioAdministradorDataResponse>)
                 await SendRequestService(request);
 
             if (!response.Success)

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Domain.Catalogo.Entities;
 using MinhaLoja.Domain.Catalogo.Events.TipoProduto.Cadastro;
 using MinhaLoja.Domain.Catalogo.Queries;
@@ -15,19 +16,19 @@ using MensagensTipoProduto = MinhaLoja.Domain.MessagesDomain.Catalogo;
 namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
 {
     public class CadastroTipoProdutoAppService : AppService<CadastroTipoProdutoDataResponse>,
-        IRequestHandler<CadastroTipoProdutoRequest, IResponseService<CadastroTipoProdutoDataResponse>>
+        IRequestHandler<CadastroTipoProdutoRequest, IResponseAppService<CadastroTipoProdutoDataResponse>>
     {
         private readonly ITipoProdutoRepository _tipoProdutoRepository;
 
         public CadastroTipoProdutoAppService(
             ITipoProdutoRepository tipoProdutoRepository,
-            DependenciesAppService dependenciesAppService) 
+            DependenciesAppService dependenciesAppService)
             : base(dependenciesAppService)
         {
             _tipoProdutoRepository = tipoProdutoRepository;
         }
 
-        public async Task<IResponseService<CadastroTipoProdutoDataResponse>> Handle(
+        public async Task<IResponseAppService<CadastroTipoProdutoDataResponse>> Handle(
             CadastroTipoProdutoRequest request,
             CancellationToken cancellationToken)
         {
@@ -39,7 +40,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             int? numeroAtualOrdemHierarquiaGrupo = null;
             if (request.IdTipoProdutoSuperior.HasValue)
             {
-                IResponseService<CadastroTipoProdutoDataResponse> validacaoTipoProdutoSuperior =
+                IResponseAppService<CadastroTipoProdutoDataResponse> validacaoTipoProdutoSuperior =
                     ValidarTipoProdutoSuperior(
                         idTipoProdutoSuperior: request.IdTipoProdutoSuperior.Value,
                         codigoGrupoTipoProduto: out codigoGrupoTipoProduto,
@@ -50,7 +51,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             }
 
 
-            IResponseService<CadastroTipoProdutoDataResponse> validacaoCaracteristicas = ValidarCaracteristicas(
+            IResponseAppService<CadastroTipoProdutoDataResponse> validacaoCaracteristicas = ValidarCaracteristicas(
                 caracteristicasTipoProduto: request.CaracteristicasTipoProduto,
                 codigoGrupoTipoProduto: codigoGrupoTipoProduto);
 
@@ -74,6 +75,9 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
                 codigoGrupoTipoProduto: codigoGrupoTipoProduto,
                 numeroAtualOrdemHierarquiaGrupo: numeroAtualOrdemHierarquiaGrupo);
 
+            if (tipoProduto == null)
+                throw new DomainException("erro na realização do cadastro do Tipo de Produto");
+
             if (tipoProduto.IsValid is false)
                 return ReturnNotifications(tipoProduto.Notifications);
 
@@ -82,7 +86,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
         }
 
 
-        private IResponseService<CadastroTipoProdutoDataResponse> ValidarTipoProdutoSuperior(
+        private IResponseAppService<CadastroTipoProdutoDataResponse> ValidarTipoProdutoSuperior(
             int idTipoProdutoSuperior,
             out Guid? codigoGrupoTipoProduto,
             out int? numeroAtualOrdemHierarquiaGrupo)
@@ -109,11 +113,11 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             codigoGrupoTipoProduto = tipoProdutoSuperior.CodigoGrupoTipoProduto;
             numeroAtualOrdemHierarquiaGrupo = tipoProdutoSuperior.NumeroOrdemHierarquiaGrupo;
 
-            
+
             return null;
         }
 
-        private IResponseService<CadastroTipoProdutoDataResponse> ValidarCaracteristicas(
+        private IResponseAppService<CadastroTipoProdutoDataResponse> ValidarCaracteristicas(
             IList<(string nome, string observacao)> caracteristicasTipoProduto,
             Guid? codigoGrupoTipoProduto)
         {
@@ -127,7 +131,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             if (codigoGrupoTipoProduto.HasValue is false)
                 return null;
 
-            var caracteristicasGrupoTipoProduto = 
+            var caracteristicasGrupoTipoProduto =
                 _tipoProdutoRepository
                     .GetEntity()
                         .Include(tipoProduto => tipoProduto.CaracteristicasTipoProduto)
@@ -182,9 +186,11 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
                     ),
                     aggregateRoot: tipoProduto
                 );
+
+                return tipoProduto;
             }
 
-            return tipoProduto;
+            return null;
         }
 
         private CadastroTipoProdutoDataResponse ConfigurarRetorno(Entities.TipoProduto tipoProduto)

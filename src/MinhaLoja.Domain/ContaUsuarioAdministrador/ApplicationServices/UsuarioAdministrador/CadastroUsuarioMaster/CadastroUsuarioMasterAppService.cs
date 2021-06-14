@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.UsuarioAdministrador.CadastroUsuarioMaster;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Queries;
@@ -13,7 +14,7 @@ using MensagensUsuario = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministrad
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.CadastroUsuarioMaster
 {
     public class CadastroUsuarioMasterAppService : AppService<bool>,
-        IRequestHandler<CadastroUsuarioMasterRequest, IResponseService<bool>>
+        IRequestHandler<CadastroUsuarioMasterRequest, IResponseAppService<bool>>
     {
         private readonly IUsuarioAdministradorRepository _usuarioAdministradorRepository;
         private readonly GlobalSettings _globalSettings;
@@ -28,7 +29,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             _globalSettings = globalSettings;
         }
 
-        public async Task<IResponseService<bool>> Handle(
+        public async Task<IResponseAppService<bool>> Handle(
             CadastroUsuarioMasterRequest request, 
             CancellationToken cancellationToken)
         {
@@ -68,9 +69,11 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                     ),
                     aggregateRoot: usuarioAdministrador
                 );
+
+                return ReturnSuccess();
             }
 
-            return ReturnSuccess();
+            throw new DomainException("erro na realização do cadastro do Usuário Master");
         }
     }
 }

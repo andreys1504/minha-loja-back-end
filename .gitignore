@@ -1,7 +1,9 @@
 
 **/.vs/
+**/.vscode/
 **/bin/
 **/obj/
+
 
 **/MinhaLoja.Api.Loja/
 **/MinhaLoja.ConsoleAppTests/

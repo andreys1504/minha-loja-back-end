@@ -8,7 +8,7 @@ using MensagensUsuario = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministrad
 
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Autenticacao
 {
-    public class AutenticacaoUsuarioAdministradorRequest : RequestService, IRequest<IResponseService<AutenticacaoUsuarioAdministradorDataResponse>>
+    public class AutenticacaoUsuarioAdministradorRequest : RequestAppService, IRequest<IResponseAppService<AutenticacaoUsuarioAdministradorDataResponse>>
     {
         public AutenticacaoUsuarioAdministradorRequest(
             string username,

@@ -7,6 +7,7 @@ using System;
 
 namespace MinhaLoja.Worker.DomainEventsReceiver
 {
+    //TODO: erros globais
     public class Program
     {
         public static void Main(string[] args)

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.UsuarioAdministrador.CadastroUsuarioVendedor;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Queries;
@@ -13,7 +14,7 @@ using MensagensVendedor = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministra
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.CadastroUsuarioVendedor
 {
     public class CadastroUsuarioVendedorAppService : AppService<string>,
-        IRequestHandler<CadastroUsuarioVendedorRequest, IResponseService<string>>
+        IRequestHandler<CadastroUsuarioVendedorRequest, IResponseAppService<string>>
     {
         private readonly GlobalSettings _globalSettings;
         private readonly IUsuarioAdministradorRepository _usuarioAdministradorRepository;
@@ -28,7 +29,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             _usuarioAdministradorRepository = usuarioAdministradorRepository;
         }
 
-        public async Task<IResponseService<string>> Handle(
+        public async Task<IResponseAppService<string>> Handle(
             CadastroUsuarioVendedorRequest request,
             CancellationToken cancellationToken)
         {
@@ -48,6 +49,9 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                 return ReturnNotification("Email/CNPJ", MensagensVendedor.Vendedor_Cadastro_NotificacaoUsuarioExistente);
 
             Entities.UsuarioAdministrador usuarioAdministrador = await CadastrarUsuarioVendedor(request: request);
+
+            if(usuarioAdministrador == null)
+                throw new DomainException("erro na realização do cadastro do usuário Vendedor");
 
             if (usuarioAdministrador.IsValid is false)
                 return ReturnNotifications(usuarioAdministrador.Notifications);
@@ -89,9 +93,11 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                     ),
                     aggregateRoot: usuarioAdministrador
                 );
+
+                return usuarioAdministrador;
             }
 
-            return usuarioAdministrador;
+            return null;
         }
     }
 }

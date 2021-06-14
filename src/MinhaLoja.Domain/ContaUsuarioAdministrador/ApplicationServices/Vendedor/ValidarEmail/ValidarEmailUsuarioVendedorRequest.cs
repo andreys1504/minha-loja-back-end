@@ -9,7 +9,7 @@ using MensagensVendedor = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministra
 
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.ValidarEmail
 {
-    public class ValidarEmailUsuarioVendedorRequest : RequestService, IRequest<IResponseService<IList<string>>>
+    public class ValidarEmailUsuarioVendedorRequest : RequestAppService, IRequest<IResponseAppService<IList<string>>>
     {
         public ValidarEmailUsuarioVendedorRequest(string codigo)
         {

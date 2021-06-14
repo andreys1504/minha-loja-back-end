@@ -9,7 +9,7 @@ using MensagensTipoProduto = MinhaLoja.Domain.MessagesDomain.Catalogo;
 
 namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
 {
-    public class CadastroTipoProdutoRequest : RequestService, IRequest<IResponseService<CadastroTipoProdutoDataResponse>>
+    public class CadastroTipoProdutoRequest : RequestAppService, IRequest<IResponseAppService<CadastroTipoProdutoDataResponse>>
     {
         public CadastroTipoProdutoRequest(
             string nomeTipoProduto,

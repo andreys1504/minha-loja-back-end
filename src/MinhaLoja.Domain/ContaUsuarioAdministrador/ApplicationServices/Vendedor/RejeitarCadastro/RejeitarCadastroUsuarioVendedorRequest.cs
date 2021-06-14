@@ -8,7 +8,7 @@ using MensagensVendedor = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministra
 
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.RejeitarCadastro
 {
-    public class RejeitarCadastroUsuarioVendedorRequest : RequestService, IRequest<IResponseService<bool>>
+    public class RejeitarCadastroUsuarioVendedorRequest : RequestAppService, IRequest<IResponseAppService<bool>>
     {
         public RejeitarCadastroUsuarioVendedorRequest(
             int idVendedor,

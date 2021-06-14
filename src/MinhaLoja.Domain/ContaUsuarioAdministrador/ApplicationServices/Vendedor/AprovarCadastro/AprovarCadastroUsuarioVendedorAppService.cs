@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Events.Vendedor.AprovacaoCadastro;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.Repositories;
 using System.Linq;
@@ -11,7 +12,7 @@ using MensagensVendedor = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministra
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.AprovarCadastro
 {
     public class AprovarCadastroUsuarioVendedorAppService : AppService<bool>,
-        IRequestHandler<AprovarCadastroUsuarioVendedorRequest, IResponseService<bool>>
+        IRequestHandler<AprovarCadastroUsuarioVendedorRequest, IResponseAppService<bool>>
     {
         private readonly IVendedorRepository _vendedorRepository;
 
@@ -23,7 +24,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             _vendedorRepository = vendedorRepository;
         }
 
-        public async Task<IResponseService<bool>> Handle(
+        public async Task<IResponseAppService<bool>> Handle(
             AprovarCadastroUsuarioVendedorRequest request, 
             CancellationToken cancellationToken)
         {
@@ -52,9 +53,11 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
                     ),
                     aggregateRoot: vendedor
                 );
+                
+                return ReturnSuccess();
             }
 
-            return ReturnSuccess();
+            throw new DomainException("erro na realização da Aprovação do Cadastro do Vendedor");
         }
     }
 }

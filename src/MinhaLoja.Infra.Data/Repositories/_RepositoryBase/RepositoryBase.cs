@@ -39,6 +39,21 @@ namespace MinhaLoja.Infra.Data.Repositories.RepositoryBase
             _dependenciesRepositories.MinhaLojaContext.Set<TAggregateRoot>().Remove(entity);
         }
 
+        public async Task<bool> DeleteEntityByIdAsync(int idEntity)
+        {
+            TAggregateRoot aggregateRoot = await _dependenciesRepositories
+                .MinhaLojaContext.Set<TAggregateRoot>()
+                .FirstOrDefaultAsync(entity => entity.Id == idEntity);
+
+            if (aggregateRoot != null)
+            {
+                DeleteEntity(aggregateRoot);
+                return true;
+            }
+
+            return false;
+        }
+
         public IQueryable<TAggregate> GetEntityAggregate<TAggregate>() 
             where TAggregate : Aggregate<TAggregateRoot>
         {

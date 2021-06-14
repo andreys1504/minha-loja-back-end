@@ -29,5 +29,12 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.Queries
             return usuario => usuario.Username == username.Trim()
                 && usuario.Senha == senha;
         }
+
+        public static Expression<Func<Entities.UsuarioAdministrador, bool>> PermitirExclusaoVendedorPorCadastroNaoAprovado()
+        {
+            return usuario => usuario.Vendedor.CadastroAprovado.HasValue
+                && usuario.Vendedor.CadastroAprovado.Value == false
+                && usuario.Vendedor.DataCadastro.Date <= DateTime.Now.Date.AddDays(-7);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Domain.Catalogo.Entities;
 using MinhaLoja.Domain.Catalogo.Events.Produto.Cadastro;
 using MinhaLoja.Domain.Catalogo.Queries;
@@ -14,7 +15,7 @@ using MensagensProduto = MinhaLoja.Domain.MessagesDomain.Catalogo;
 namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
 {
     public class CadastroProdutoAppService : AppService<CadastroProdutoDataResponse>,
-        IRequestHandler<CadastroProdutoRequest, IResponseService<CadastroProdutoDataResponse>>
+        IRequestHandler<CadastroProdutoRequest, IResponseAppService<CadastroProdutoDataResponse>>
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMarcaRepository _marcaRepository;
@@ -26,7 +27,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
             IMarcaRepository marcaRepository,
             ITipoProdutoRepository tipoProdutoRepository,
             IVendedorRepository vendedorRepository,
-            DependenciesAppService dependenciesAppService) 
+            DependenciesAppService dependenciesAppService)
             : base(dependenciesAppService)
         {
             _produtoRepository = produtoRepository;
@@ -35,7 +36,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
             _vendedorRepository = vendedorRepository;
         }
 
-        public async Task<IResponseService<CadastroProdutoDataResponse>> Handle(
+        public async Task<IResponseAppService<CadastroProdutoDataResponse>> Handle(
             CadastroProdutoRequest request,
             CancellationToken cancellationToken)
         {
@@ -43,7 +44,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                 return ReturnNotifications(request.Notifications);
 
 
-            IResponseService<CadastroProdutoDataResponse> validacoesItensVinculadoProduto = 
+            IResponseAppService<CadastroProdutoDataResponse> validacoesItensVinculadoProduto =
                 ValidarItensVinculadoProduto(request: request);
 
             if (validacoesItensVinculadoProduto != null)
@@ -87,29 +88,31 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                         ),
                     aggregateRoot: produto
                 );
+
+                var produtoCadastrado = new CadastroProdutoDataResponse
+                {
+                    IdProduto = produto.Id,
+                    NomeProduto = produto.Nome,
+                    ValorAtual = produto.ValorAtual,
+                    IdMarca = produto.MarcaId,
+                    DescricaoProduto = produto.Descricao,
+                    IdExterno = produto.IdExterno,
+                    IdTipoProduto = produto.TipoProdutoId
+                };
+
+                if (produto.CaracteristicasProduto?.Count > 0)
+                    produtoCadastrado.CaracteristicasProduto =
+                        produto.CaracteristicasProduto
+                            .Select(caracteristica => caracteristica.Descricao);
+
+                return ReturnData(produtoCadastrado);
             }
 
-            var produtoCadastrado = new CadastroProdutoDataResponse
-            {
-                IdProduto = produto.Id,
-                NomeProduto = produto.Nome,
-                ValorAtual = produto.ValorAtual,
-                IdMarca = produto.MarcaId,
-                DescricaoProduto = produto.Descricao,
-                IdExterno = produto.IdExterno,
-                IdTipoProduto = produto.TipoProdutoId
-            };
-
-            if (produto.CaracteristicasProduto?.Count > 0)
-                produtoCadastrado.CaracteristicasProduto = 
-                    produto.CaracteristicasProduto
-                        .Select(caracteristica => caracteristica.Descricao);
-
-            return ReturnData(produtoCadastrado);
+            throw new DomainException("erro na realização do cadastro do Produto");
         }
 
 
-        private IResponseService<CadastroProdutoDataResponse> 
+        private IResponseAppService<CadastroProdutoDataResponse>
             ValidarItensVinculadoProduto(CadastroProdutoRequest request)
         {
             bool marcaExistente =
@@ -137,7 +140,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                 return ReturnNotification(nameof(request.IdTipoProduto), MensagensProduto.Produto_Cadastro_IdTipoProdutoInvalido);
 
 
-            if(request.IdVendedor.HasValue)
+            if (request.IdVendedor.HasValue)
             {
                 bool vendedor =
                     _vendedorRepository

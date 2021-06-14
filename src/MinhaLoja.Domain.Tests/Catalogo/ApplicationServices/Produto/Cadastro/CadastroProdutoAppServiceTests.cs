@@ -122,7 +122,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -248,7 +248,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -301,7 +301,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -366,7 +366,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -448,7 +448,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -501,7 +501,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -548,7 +548,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -595,7 +595,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -640,7 +640,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -687,7 +687,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -734,7 +734,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -776,7 +776,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -816,7 +816,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
                 );
 
             //act
-            IResponseService<CadastroProdutoDataResponse> response =
+            IResponseAppService<CadastroProdutoDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert

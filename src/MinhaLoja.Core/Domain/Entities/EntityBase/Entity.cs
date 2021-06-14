@@ -19,6 +19,11 @@ namespace MinhaLoja.Core.Domain.Entities.EntityBase
         public DateTime DataUltimaAtualizacao { get; private set; }
         public Guid? IdUsuarioUltimaAtualizacao { get; private set; }
 
+        protected void AtualizarDataUltimaAtualizacao()
+        {
+            DataUltimaAtualizacao = DateTime.Now;
+        }
+
         //Para testes unitários
         public void AlterarId(int valor)
         {

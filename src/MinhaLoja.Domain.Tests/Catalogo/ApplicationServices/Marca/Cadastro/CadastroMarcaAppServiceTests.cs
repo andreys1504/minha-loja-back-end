@@ -27,7 +27,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Marca.Cadastro
                 dependenciesAppService: new DependenciesAppServiceFake());
 
             //act
-            IResponseService<CadastroMarcaDataResponse> response = 
+            IResponseAppService<CadastroMarcaDataResponse> response = 
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -60,7 +60,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Marca.Cadastro
             );
 
             //act
-            IResponseService<CadastroMarcaDataResponse> response =
+            IResponseAppService<CadastroMarcaDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert
@@ -93,7 +93,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Marca.Cadastro
                 );
 
             //act
-            IResponseService<CadastroMarcaDataResponse> response =
+            IResponseAppService<CadastroMarcaDataResponse> response =
                 appService.Handle(request, CancellationToken.None).GetAwaiter().GetResult();
 
             //assert

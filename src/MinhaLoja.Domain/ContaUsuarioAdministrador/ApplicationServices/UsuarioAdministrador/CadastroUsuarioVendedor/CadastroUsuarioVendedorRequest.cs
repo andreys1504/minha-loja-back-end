@@ -8,7 +8,7 @@ using MensagensVendedor = MinhaLoja.Domain.MessagesDomain.ContaUsuarioAdministra
 
 namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.CadastroUsuarioVendedor
 {
-    public class CadastroUsuarioVendedorRequest : RequestService, IRequest<IResponseService<string>>
+    public class CadastroUsuarioVendedorRequest : RequestAppService, IRequest<IResponseAppService<string>>
     {
         public CadastroUsuarioVendedorRequest(
             string nome,

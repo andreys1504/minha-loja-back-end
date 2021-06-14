@@ -7,30 +7,30 @@ namespace MinhaLoja.Core.Domain.ApplicationServices.Service
 {
     public abstract partial class AppService<TDataResponse>
     {
-        protected IResponseService<bool> ReturnSuccess()
+        protected IResponseAppService<bool> ReturnSuccess()
         {
             DisposeTransactionAsync().GetAwaiter();
-            return new ResponseService<bool>(true, null);
+            return new ResponseAppService<bool>(true, null);
         }
 
-        protected IResponseService<TDataResponse> ReturnData(
+        protected IResponseAppService<TDataResponse> ReturnData(
             TDataResponse data, 
             PagedDataResponseService pagination = null)
         {
             DisposeTransactionAsync().GetAwaiter();
-            return new ResponseService<TDataResponse>(data, pagination);
+            return new ResponseAppService<TDataResponse>(data, pagination);
         }
 
-        protected IResponseService<TDataResponse> ReturnNotification(string key, string message)
+        protected IResponseAppService<TDataResponse> ReturnNotification(string key, string message)
         {
             DisposeTransactionAsync().GetAwaiter();
-            return new ResponseService<TDataResponse>(new Notification(key, message));
+            return new ResponseAppService<TDataResponse>(new Notification(key, message));
         }
 
-        protected IResponseService<TDataResponse> ReturnNotifications(IReadOnlyCollection<Notification> notifications)
+        protected IResponseAppService<TDataResponse> ReturnNotifications(IReadOnlyCollection<Notification> notifications)
         {
             DisposeTransactionAsync().GetAwaiter();
-            return new ResponseService<TDataResponse>(notifications.ToList());
+            return new ResponseAppService<TDataResponse>(notifications.ToList());
         }
     }
 }

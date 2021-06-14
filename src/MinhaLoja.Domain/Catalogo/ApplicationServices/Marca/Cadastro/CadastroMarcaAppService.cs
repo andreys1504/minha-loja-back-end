@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Domain.ApplicationServices.Service;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Domain.Catalogo.Events.Marca.Cadastro;
 using MinhaLoja.Domain.Catalogo.Queries;
 using MinhaLoja.Domain.Catalogo.Repositories;
@@ -11,21 +12,21 @@ using MarcaMensagens = MinhaLoja.Domain.MessagesDomain.Catalogo;
 
 namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.Cadastro
 {
-    public class CadastroMarcaAppService : AppService<CadastroMarcaDataResponse>, 
-        IRequestHandler<CadastroMarcaRequest, IResponseService<CadastroMarcaDataResponse>>
+    public class CadastroMarcaAppService : AppService<CadastroMarcaDataResponse>,
+        IRequestHandler<CadastroMarcaRequest, IResponseAppService<CadastroMarcaDataResponse>>
     {
         private readonly IMarcaRepository _marcaRepository;
 
         public CadastroMarcaAppService(
             IMarcaRepository marcaRepository,
-            DependenciesAppService dependenciesAppService) 
+            DependenciesAppService dependenciesAppService)
             : base(dependenciesAppService)
         {
             _marcaRepository = marcaRepository;
         }
 
-        public async Task<IResponseService<CadastroMarcaDataResponse>> Handle(
-            CadastroMarcaRequest request, 
+        public async Task<IResponseAppService<CadastroMarcaDataResponse>> Handle(
+            CadastroMarcaRequest request,
             CancellationToken cancellationToken)
         {
             if (!request.Validate())
@@ -56,13 +57,15 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.Cadastro
                     ),
                     aggregateRoot: marca
                 );
+
+                return ReturnData(new CadastroMarcaDataResponse()
+                {
+                    IdMarca = marca.Id,
+                    NomeMarca = marca.Nome
+                });
             }
 
-            return ReturnData(new CadastroMarcaDataResponse()
-            {
-                IdMarca = marca.Id,
-                NomeMarca = marca.Nome
-            });
+            throw new DomainException("erro na realização do cadastro da Marca");
         }
     }
 }

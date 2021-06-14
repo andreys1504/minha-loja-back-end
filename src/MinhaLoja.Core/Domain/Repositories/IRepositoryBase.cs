@@ -13,6 +13,8 @@ namespace MinhaLoja.Core.Domain.Repositories
 
         void DeleteEntity(TAggregateRoot entity);
 
+        Task<bool> DeleteEntityByIdAsync(int idEntity);
+
         IQueryable<TAggregate> GetEntityAggregate<TAggregate>()
             where TAggregate : Aggregate<TAggregateRoot>;
     }

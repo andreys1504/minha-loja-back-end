@@ -12,7 +12,7 @@ namespace MinhaLoja.Api.Identity.Controllers
             get => (IMediatorHandler)HttpContext.RequestServices.GetService(typeof(IMediatorHandler));
         }
 
-        protected async Task<object> SendRequestService(RequestService request)
+        protected async Task<object> SendRequestService(RequestAppService request)
         {
             return await MediatorHandler.SendRequestServiceToHandlerAsync(request);
         }

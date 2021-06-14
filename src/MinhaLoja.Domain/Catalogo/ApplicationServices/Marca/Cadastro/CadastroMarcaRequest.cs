@@ -8,7 +8,7 @@ using MarcaMensagens = MinhaLoja.Domain.MessagesDomain.Catalogo;
 
 namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.Cadastro
 {
-    public class CadastroMarcaRequest : RequestService, IRequest<IResponseService<CadastroMarcaDataResponse>>
+    public class CadastroMarcaRequest : RequestAppService, IRequest<IResponseAppService<CadastroMarcaDataResponse>>
     {
         public CadastroMarcaRequest(
             string nomeMarca,
