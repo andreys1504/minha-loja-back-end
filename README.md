@@ -60,3 +60,4 @@ src\MinhaLoja.Infra.Api.Identity (Update-Database -Context IdentityMinhaLojaCont
 - Também haverá a possibilidade de se cadastrar Marcas e Tipo de Produtos (Eletrodoméstico, Refrigerador, TV, etc.).
 - O vendedor só terá acesso ao sistema após seu cadastro ser aprovado por um Usuário Master.
 - Erros que ocorrerem durante requisições deverão ser logados.
+- Cadastros não aprovados de vendedores devem ser excluidos do sistema. Uma "worker" realizará a tarefa.
