@@ -32,7 +32,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             ExcluirVendedoresCadastroRejeitadoRequest request, 
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
                 return ReturnNotifications(request.Notifications);
 
 

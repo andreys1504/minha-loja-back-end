@@ -20,7 +20,7 @@ namespace MinhaLoja.Infra.Services.LogHandler
 
         public async Task SendAsync(ErrorApplicationModel error)
         {
-            if (_globalSettings.SendLogErrorToStorage is false)
+            if (_globalSettings.SendLogErrorToStorage == false)
                 return;
 
             var queueClient = new QueueClient(

@@ -28,7 +28,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             AprovarCadastroUsuarioVendedorRequest request, 
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
                 return ReturnNotifications(request.Notifications);
 
             Entities.Vendedor vendedor =
@@ -40,7 +40,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
                 return ReturnNotification(nameof(request.IdVendedor), MensagensVendedor.Vendedor_Aprovar_NotificacaoUsuarioInexistente);
 
             vendedor.AprovarCadastro();
-            if (vendedor.IsValid is false)
+            if (vendedor.IsValid == false)
                 return ReturnNotification(nameof(vendedor.CadastroAprovado), MensagensVendedor.Vendedor_Aprovar_NotificacaoErroAprovacao);
 
 

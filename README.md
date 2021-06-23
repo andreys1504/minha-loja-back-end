@@ -39,11 +39,12 @@ Uma api/worker consomem o domínio através do envio de Requests, que estão pre
 - Event Sourcing
 
 ### Implementação: Configurações
-- docker-compose
-via terminal: docker-compose up -d
 
 - appsettings.json
 utilizar appsettings.EXAMPLE.json para a criação das configurações em Apis e Works.
+
+- docker-compose
+via terminal: docker-compose up -d --build 
 
 ### Migrations
 - executar migrations em: 

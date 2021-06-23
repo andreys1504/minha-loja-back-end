@@ -20,5 +20,7 @@ namespace MinhaLoja.Core.Infra.Identity.Services
         string GetUserId(ClaimsPrincipal user);
 
         string GetSellerId(ClaimsPrincipal user);
+
+        IEnumerable<Claim> GetClaims(string tokenJwt);
     }
 }

@@ -24,7 +24,7 @@ namespace MinhaLoja.Core.Mediator
 
         public async Task SendEventToBusAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            if (_globalSettings.PublishEventsInBus is false)
+            if (_globalSettings.PublishEventsInBus == false)
                 await SendEventToHandlersAsync(@event);
 
             await _serviceBusManagement.SendMessageToQueue(

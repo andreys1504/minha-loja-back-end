@@ -78,7 +78,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             if (tipoProduto == null)
                 throw new DomainException("erro na realização do cadastro do Tipo de Produto");
 
-            if (tipoProduto.IsValid is false)
+            if (tipoProduto.IsValid == false)
                 return ReturnNotifications(tipoProduto.Notifications);
 
 
@@ -128,7 +128,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             if (TipoProdutoQueries.CaracteristicasIguaisExistentes(nomesCaracteristicasParaCadastro))
                 return ReturnNotification(nameof(caracteristicasTipoProduto), MensagensTipoProduto.TipoProduto_Cadastro_CaracteristicasRepetidasEnviada);
 
-            if (codigoGrupoTipoProduto.HasValue is false)
+            if (codigoGrupoTipoProduto.HasValue == false)
                 return null;
 
             var caracteristicasGrupoTipoProduto =
@@ -165,7 +165,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
                 caracteristicasTipoProduto: request.CaracteristicasTipoProduto,
                 idUsuario: request.IdUsuario);
 
-            if (tipoProduto.IsValid is false)
+            if (tipoProduto.IsValid == false)
                 return tipoProduto;
 
             await _tipoProdutoRepository.AddEntityAsync(tipoProduto);

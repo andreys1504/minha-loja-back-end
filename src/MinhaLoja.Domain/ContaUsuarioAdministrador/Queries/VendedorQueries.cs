@@ -6,30 +6,29 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.Queries
 {
     public static class VendedorQueries
     {
-        public static Expression<Func<Entities.Vendedor, bool>> CodigoValidacaoEmailValido(string codigo)
+        public static Expression<Func<Vendedor, bool>> CodigoValidacaoEmailValido(string codigo)
         {
             return vendedor => vendedor.CodigoValidacaoEmail == codigo;
         }
 
-
-        public static bool PermissaoValidacaoEmail(this Vendedor vendedor)
+        public static Expression<Func<Vendedor, bool>> CadastroUsuarioAprovacaoPendente()
         {
-            return vendedor.DataMaximaCodigoValidacaoEmail >= DateTime.Now.Date;
+            return vendedor => vendedor.CadastroAprovado.HasValue == false;
         }
 
-        public static bool CadastroUsuarioAprovacaoPendente(this Vendedor vendedor)
+        public static Expression<Func<Vendedor, bool>> CadastroUsuarioRejeitado()
         {
-            return vendedor.CadastroAprovado.HasValue is false;
+            return vendedor => vendedor.CadastroAprovado.HasValue && vendedor.CadastroAprovado.Value == false;
         }
 
-        public static bool CadastroUsuarioAprovado(this Vendedor vendedor)
+        public static Expression<Func<Vendedor, bool>> PermissaoValidacaoEmail()
         {
-            return vendedor.CadastroAprovado.HasValue && vendedor.CadastroAprovado.Value;
+            return vendedor => vendedor.DataMaximaCodigoValidacaoEmail >= DateTime.Now.Date;
         }
 
-        public static bool EmailUsuarioValidado(this Vendedor vendedor)
+        public static Expression<Func<Vendedor, bool>> EmailUsuarioValidado()
         {
-            return vendedor.EmailValidado;
+            return vendedor => vendedor.EmailValidado == true;
         }
     }
 }

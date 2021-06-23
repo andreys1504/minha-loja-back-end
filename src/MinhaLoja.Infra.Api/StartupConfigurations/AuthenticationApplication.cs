@@ -16,14 +16,27 @@ namespace MinhaLoja.Infra.Api.StartupConfigurations
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.RequireHttpsMetadata = true;
                     options.SaveToken = true;
                     options.IncludeErrorDetails = globalSettings.Environment != Environments.Production;
-                    options.SetJwksOptions(new JwkOptions(
-                            jwksUri: globalSettings.Identity.JwksUri,
-                            cacheTime: TimeSpan.FromMinutes(15)
-                        )
-                    );
+                    options.RequireHttpsMetadata = !globalSettings.NotUseHttps;
+                    TimeSpan cacheTime = TimeSpan.FromMinutes(15);
+                    JwkOptions JwkOptions = null;
+
+                    if (string.IsNullOrWhiteSpace(globalSettings.Identity.Issuer) == false)
+                    {
+                        JwkOptions = new JwkOptions(
+                                issuer: globalSettings.Identity.Issuer,
+                                jwksUri: globalSettings.Identity.JwksUri,
+                                cacheTime: cacheTime);
+                    }
+                    else
+                    {
+                        JwkOptions = new JwkOptions(
+                                jwksUri: globalSettings.Identity.JwksUri,
+                                cacheTime: cacheTime);
+                    }
+
+                    options.SetJwksOptions(JwkOptions);
                 });
         }
     }

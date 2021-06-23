@@ -2,7 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-	</PropertyGroup>
+		<UserSecretsId>58f011cc-8f97-4566-9d86-c5e0f5619972</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />

@@ -62,7 +62,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                 idVendedor: request.IdVendedor,
                 idUsuario: request.IdUsuario);
 
-            if (produto.IsValid is false)
+            if (produto.IsValid == false)
                 return ReturnNotifications(produto.Notifications);
 
             await _produtoRepository.AddEntityAsync(produto);
@@ -120,7 +120,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                     .GetEntity()
                     .Any(marca => marca.Id == request.IdMarca);
 
-            if (marcaExistente is false)
+            if (marcaExistente == false)
                 return ReturnNotification(nameof(request.IdMarca), MensagensProduto.Produto_Cadastro_IdMarcaInvalida);
 
 
@@ -147,7 +147,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                         .GetEntity()
                         .Any(vendedor => vendedor.Id == request.IdVendedor.Value);
 
-                if (vendedor is false)
+                if (vendedor == false)
                     return ReturnNotification(nameof(request.IdVendedor), MensagensProduto.Produto_Cadastro_IdVendedorInvalido);
             }
 

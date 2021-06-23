@@ -35,8 +35,10 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             AutenticacaoUsuarioAdministradorRequest request,
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
+            {
                 return ReturnNotifications(request.Notifications);
+            }
 
 
             Entities.UsuarioAdministrador usuario =
@@ -50,17 +52,21 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                     );
 
             if (usuario == null)
-                return ReturnNotification(request.Username, MensagensUsuario.UsuarioAdministrador_Autenticacao_UsernameSenhaMensagemGenerica);
+            {
+                return ReturnNotification(nameof(request.Username), MensagensUsuario.UsuarioAdministrador_Autenticacao_UsernameSenhaMensagemGenerica);
+            }
 
 
             int? idVendedor = null;
-            if (usuario.UsuarioMaster is false)
+            if (usuario.UsuarioMaster == false)
             {
-                if (usuario.Vendedor.EmailUsuarioValidado() is false)
+                if (VendedorQueries.EmailUsuarioValidado().Compile()(usuario.Vendedor) == false)
                 {
                     string novoCodigo = usuario.Vendedor.GerarNovoCodigoValidacaoEmail();
-                    if (usuario.IsValid is false)
+                    if (usuario.IsValid == false)
+                    {
                         return ReturnNotifications(usuario.Notifications);
+                    }
 
                     if (await CommitAsync())
                     {
@@ -80,11 +86,15 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                     throw new DomainException("autenticação: E-mail não validado; Erro na geração do código de validação do E-mail");
                 }
 
-                if (usuario.Vendedor.CadastroUsuarioAprovacaoPendente())
+                if (VendedorQueries.CadastroUsuarioAprovacaoPendente().Compile()(usuario.Vendedor))
+                {
                     return ReturnNotification(nameof(usuario.Vendedor.CadastroAprovado), MensagensUsuario.Vendedor_AprovacaoCadastro_CadastroAprovacaoPendente);
+                }
 
-                if (usuario.Vendedor.CadastroUsuarioAprovado() is false)
+                if (VendedorQueries.CadastroUsuarioRejeitado().Compile()(usuario.Vendedor))
+                {
                     return ReturnNotification(nameof(usuario.Vendedor.CadastroAprovado), MensagensUsuario.Vendedor_AprovacaoCadastro_CadastroNaoAprovado);
+                }
 
                 idVendedor = usuario.Vendedor.Id;
             }
@@ -96,7 +106,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                 IdVendedor = idVendedor,
                 Nome = usuario.Nome,
                 Username = usuario.Username,
-                Permissions = new List<string>
+                Permissoes = new List<string>
                 {
                     usuario.UsuarioMaster
                     ? AuthorizationsApplications.AdminLoja.UsuarioMaster

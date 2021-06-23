@@ -1,6 +1,54 @@
 version: '3.8'
 
 services:
+    api-identity:
+        image: api-identity:2
+        build: 
+            context: ./src
+            dockerfile: Dockerfile-ApiIdentity
+        ports:
+            - 1576:80
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - GlobalSettings__NotUseHttps=true
+            - GlobalSettings__DatabaseConnectionString=Server=banco-dados; Database=MinhaLoja; User Id=sa; Pwd=Pass@Word1;
+            - GlobalSettings__DatabaseSecondaryConnectionString=mongodb://banco-dados-secundario/
+            - GlobalSettings__DatabaseCacheConnectionString=banco-dados-cache
+            - GlobalSettings__UrlApiAdminLoja=http://api-admin-loja
+            - GlobalSettings__Identity__Issuer=localhost
+            - GlobalSettings__Identity__JwksUri=http://api-identity/jwks
+        networks:
+            - back-end-minha-loja-network
+        depends_on:
+            - banco-dados
+            - banco-dados-secundario
+            - banco-dados-cache
+            - storage
+
+    api-admin-loja:
+        image: api-admin-loja:2
+        build: 
+            context: ./src
+            dockerfile: Dockerfile-AdminLoja
+        ports:
+            - 1575:80
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - GlobalSettings__NotUseHttps=true
+            - GlobalSettings__DatabaseConnectionString=Server=banco-dados; Database=MinhaLoja; User Id=sa; Pwd=Pass@Word1;
+            - GlobalSettings__DatabaseSecondaryConnectionString=mongodb://banco-dados-secundario/
+            - GlobalSettings__DatabaseCacheConnectionString=banco-dados-cache
+            - GlobalSettings__UrlApiAdminLoja=http://api-admin-loja
+            - GlobalSettings__Identity__Issuer=localhost
+            - GlobalSettings__Identity__JwksUri=http://api-identity/jwks
+        networks:
+            - back-end-minha-loja-network
+        depends_on:
+            - banco-dados
+            - banco-dados-secundario
+            - banco-dados-cache
+            - storage
+            
     banco-dados:
         image: "mcr.microsoft.com/mssql/server:2019-latest"
         container_name: minha-loja-banco-dados
@@ -35,9 +83,9 @@ services:
         networks:
             - back-end-minha-loja-network
             
-    banco-dados-staging:
+    banco-dados-cache:
         image: redis:6.2.2
-        container_name: minha-loja-banco-dados-staging
+        container_name: minha-loja-banco-dados-cache
         ports:
             - 6070:6379
         volumes:

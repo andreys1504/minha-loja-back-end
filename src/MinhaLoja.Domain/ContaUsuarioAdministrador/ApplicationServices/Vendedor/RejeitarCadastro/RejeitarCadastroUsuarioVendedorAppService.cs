@@ -28,7 +28,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             RejeitarCadastroUsuarioVendedorRequest request,
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
                 return ReturnNotifications(request.Notifications);
 
             Entities.Vendedor vendedor =
@@ -41,7 +41,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
 
             vendedor.RejeitarCadastro();
 
-            if (vendedor.IsValid is false)
+            if (vendedor.IsValid == false)
                 return ReturnNotification(nameof(vendedor.CadastroAprovado), MensagensVendedor.Vendedor_Rejeitar_NotificacaoErroRejeicao);
 
             if (await CommitAsync())

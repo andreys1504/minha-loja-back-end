@@ -9,8 +9,8 @@ namespace MinhaLoja
             string val,
             string key)
         {
-            if (string.IsNullOrWhiteSpace(val) is false)
-                if (IsCnpj(val) is false)
+            if (string.IsNullOrWhiteSpace(val) == false)
+                if (IsCnpj(val) == false)
                     contract.AddNotification(key, "CNPJ inválido");
 
             return contract;
@@ -22,8 +22,8 @@ namespace MinhaLoja
             string key,
             string message)
         {
-            if (string.IsNullOrWhiteSpace(val) is false)
-                if (IsCnpj(val) is false)
+            if (string.IsNullOrWhiteSpace(val) == false)
+                if (IsCnpj(val) == false)
                     contract.AddNotification(key, message);
 
             return contract;

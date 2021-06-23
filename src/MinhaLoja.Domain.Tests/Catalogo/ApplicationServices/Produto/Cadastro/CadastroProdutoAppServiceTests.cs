@@ -136,7 +136,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Produto.Cadastro
 
             bool caracteristicaInexistente = false;
             foreach (string caracteristica in response.Data.CaracteristicasProduto)
-                if (request.CaracteristicaProduto.Any(c => c.descricao == caracteristica) is false)
+                if (request.CaracteristicaProduto.Any(c => c.descricao == caracteristica) == false)
                 {
                     caracteristicaInexistente = true;
                     break;

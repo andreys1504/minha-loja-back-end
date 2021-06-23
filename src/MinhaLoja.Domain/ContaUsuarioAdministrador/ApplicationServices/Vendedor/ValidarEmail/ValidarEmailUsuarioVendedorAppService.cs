@@ -30,8 +30,10 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             ValidarEmailUsuarioVendedorRequest request,
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
+            {
                 return ReturnNotifications(request.Notifications);
+            }
 
             Entities.Vendedor vendedor =
                 _vendedorRepository
@@ -39,13 +41,17 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
                     .FirstOrDefault(VendedorQueries.CodigoValidacaoEmailValido(request.Codigo));
 
             if (vendedor == null)
+            {
                 return ReturnNotification(nameof(request.Codigo), MensagensVendedor.Vendedor_ValidarEmail_CodigoIsNotNullOrWhiteSpace);
+            }
 
-            if (vendedor.PermissaoValidacaoEmail() is false)
+            if (VendedorQueries.PermissaoValidacaoEmail().Compile()(vendedor) == false)
             {
                 vendedor.GerarNovoCodigoValidacaoEmail();
-                if (vendedor.IsValid is false)
+                if (vendedor.IsValid == false)
+                {
                     return ReturnNotifications(vendedor.Notifications);
+                }
 
                 if (await CommitAsync())
                 {
@@ -67,8 +73,10 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
 
             vendedor.SetarEmailValido();
 
-            if (vendedor.IsValid is false)
+            if (vendedor.IsValid == false)
+            {
                 return ReturnNotifications(vendedor.Notifications);
+            }
 
             if (await CommitAsync())
             {

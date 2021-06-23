@@ -36,5 +36,14 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.Queries
                 && usuario.Vendedor.CadastroAprovado.Value == false
                 && usuario.Vendedor.DataCadastro.Date <= DateTime.Now.Date.AddDays(-7);
         }
+
+        public static Expression<Func<Entities.UsuarioAdministrador, bool>> 
+            ValidarUsuarioAutenticado(
+                Guid idUsuario,
+                string username)
+        {
+            return usuario => usuario.Id2 == idUsuario
+                && usuario.Username == username;
+        }
     }
 }

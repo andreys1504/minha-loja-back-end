@@ -2,7 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-	</PropertyGroup>
+	  <UserSecretsId>09733198-66dd-4a72-9436-bd00ea2659ab</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />
@@ -23,6 +24,10 @@
 		<ProjectReference Include="..\MinhaLoja.Core\MinhaLoja.Core.csproj" />
 		<ProjectReference Include="..\MinhaLoja.Domain\MinhaLoja.Domain.csproj" />
 		<ProjectReference Include="..\MinhaLoja.Infra.Api\MinhaLoja.Infra.Api.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\RequestApi\Vendedor\" />
 	</ItemGroup>
 
 </Project>

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Autenticacao
+namespace MinhaLoja.Api.Identity.Models
 {
-    public class AutenticacaoUsuarioAdministradorDataResponse
+    public class UsuarioProfissionalAutenticado
     {
         public Guid IdUsuario { get; set; }
         public int? IdVendedor { get; set; }

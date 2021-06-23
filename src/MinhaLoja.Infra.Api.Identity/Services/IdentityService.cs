@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
-namespace MinhaLoja.Infra.Identity.Services
+namespace MinhaLoja.Infra.Api.Identity.Services
 {
     public class IdentityService : IIdentityService
     {
@@ -42,14 +42,20 @@ namespace MinhaLoja.Infra.Identity.Services
             };
 
             if (permissions?.Count > 0)
-                if (roles is false)
+                if (roles == false)
                     permissions.ToList().ForEach(permission => claims.Add(new Claim(permission, "true")));
                 else
                     claims.Add(new Claim(ClaimTypes.Role, permissions[0]));
 
             var dateTimeNow = DateTime.UtcNow;
             var tokenHandler = new JwtSecurityTokenHandler();
+
             string currentIssuer = $"{requestScheme}://{requestHost}";
+            if (string.IsNullOrWhiteSpace(_globalSettings.Identity.Issuer) == false)
+            {
+                currentIssuer = _globalSettings.Identity.Issuer;
+            }
+
             SigningCredentials signingCredentials = _jsonWebKeySetService.GetCurrentSigningCredentials();
             SecurityToken securityToken = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
@@ -86,6 +92,14 @@ namespace MinhaLoja.Infra.Identity.Services
         public string GetSellerId(ClaimsPrincipal user)
         {
             return user?.Claims.FirstOrDefault(claim => claim.Type == "SellerId")?.Value;
+        }
+
+        public IEnumerable<Claim> GetClaims(string tokenJwt)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jwtSecurityToken = tokenHandler.ReadJwtToken(tokenJwt.Replace("Bearer", "").Trim());
+
+            return jwtSecurityToken.Claims;
         }
     }
 }

@@ -4,14 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace MinhaLoja.Api.AdminLoja.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("home")]
     public class HomeController : ApiControllerBase
     {
         [HttpGet]
         [AllowAnonymous]
-        public string Get()
+        public IActionResult Get()
         {
-            return "MinhaLoja.Api.AdminLoja";
+            return Ok("MinhaLoja.Api.AdminLoja");
+        }
+
+        [HttpGet("teste")]
+        public IActionResult Teste()
+        {
+            return Ok("MinhaLoja.Api.AdminLoja");
         }
     }
 }

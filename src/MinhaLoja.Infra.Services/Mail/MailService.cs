@@ -21,7 +21,7 @@ namespace MinhaLoja.Infra.Services.Mail
             string subject,
             string body)
         {
-            if (_globalSettings.TriggerEmails is false)
+            if (_globalSettings.TriggerEmails == false)
                 return;
 
             var mimeMessage = new MimeMessage();

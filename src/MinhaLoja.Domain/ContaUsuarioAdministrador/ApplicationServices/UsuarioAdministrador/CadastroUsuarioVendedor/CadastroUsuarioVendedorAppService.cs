@@ -33,7 +33,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             CadastroUsuarioVendedorRequest request,
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
                 return ReturnNotifications(request.Notifications);
 
             bool usuarioExistente =
@@ -53,7 +53,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             if(usuarioAdministrador == null)
                 throw new DomainException("erro na realização do cadastro do usuário Vendedor");
 
-            if (usuarioAdministrador.IsValid is false)
+            if (usuarioAdministrador.IsValid == false)
                 return ReturnNotifications(usuarioAdministrador.Notifications);
 
             
@@ -75,7 +75,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                 idUsuario: usuarioAdministrador.Id)
             );
 
-            if (usuarioAdministrador.IsValid is false)
+            if (usuarioAdministrador.IsValid == false)
                 return usuarioAdministrador;
 
             await _usuarioAdministradorRepository.AddEntityAsync(usuarioAdministrador);

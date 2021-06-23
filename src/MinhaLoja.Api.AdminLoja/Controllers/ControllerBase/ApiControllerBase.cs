@@ -34,7 +34,9 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
         {
             string idVendedor = IdentityService.GetSellerId(user);
             if (string.IsNullOrWhiteSpace(idVendedor))
+            {
                 return null;
+            }
 
             _ = int.TryParse(idVendedor, out int idVendedorRetorno);
 
@@ -49,8 +51,12 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
         protected ObjectResult ReturnApi(HttpStatusCode statusCode, object value = null)
         {
             if (value is IResponse response)
-                if (response.Success is false)
-                    statusCode = HttpStatusCode.OK;
+            {
+                if (response.Success == false)
+                {
+                    statusCode = HttpStatusCode.BadRequest;
+                }
+            }
 
             return StatusCode((int)statusCode, value);
         }

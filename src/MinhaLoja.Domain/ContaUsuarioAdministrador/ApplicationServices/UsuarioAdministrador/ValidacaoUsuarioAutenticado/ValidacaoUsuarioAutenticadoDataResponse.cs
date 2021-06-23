@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Autenticacao
+namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Validacao
 {
-    public class AutenticacaoUsuarioAdministradorDataResponse
+    public class ValidacaoUsuarioAutenticadoDataResponse
     {
         public Guid IdUsuario { get; set; }
         public int? IdVendedor { get; set; }

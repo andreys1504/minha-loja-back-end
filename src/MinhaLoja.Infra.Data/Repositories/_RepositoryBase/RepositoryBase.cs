@@ -24,7 +24,9 @@ namespace MinhaLoja.Infra.Data.Repositories.RepositoryBase
             var aggregateRoot = _dependenciesRepositories.MinhaLojaContext.Set<TAggregateRoot>();
 
             if (asNoTracking)
+            {
                 return aggregateRoot.AsNoTracking();
+            }
 
             return aggregateRoot;
         }

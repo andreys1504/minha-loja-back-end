@@ -5,5 +5,6 @@
         public int ExpiresToken { get; set; }
         public bool IsHours { get; set; }
         public string JwksUri { get; set; }
+        public string Issuer { get; set; }
     }
 }

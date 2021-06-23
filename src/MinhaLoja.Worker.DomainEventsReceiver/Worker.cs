@@ -98,7 +98,7 @@ namespace MinhaLoja.Worker.DomainEventsReceiver
 
                 if (@event is DomainEvent domainEvent)
                 {
-                    if ((await eventStoreRepository.ExistingEventAsync<StoredDomainEvent>(domainEvent.EventId)) is false)
+                    if ((await eventStoreRepository.ExistingEventAsync<StoredDomainEvent>(domainEvent.EventId)) == false)
                     {
                         var storedDomainEvent = new StoredDomainEvent(
                             @event: domainEvent,

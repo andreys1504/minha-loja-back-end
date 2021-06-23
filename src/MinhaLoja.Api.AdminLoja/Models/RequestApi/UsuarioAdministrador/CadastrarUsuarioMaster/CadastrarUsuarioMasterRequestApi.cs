@@ -1,4 +1,4 @@
-﻿namespace MinhaLoja.Api.AdminLoja.Models.RequestApi.ContaUsuarioAdministrador.CadastrarUsuarioMaster
+﻿namespace MinhaLoja.Api.AdminLoja.Models.RequestApi.UsuarioAdministrador.CadastrarUsuarioMaster
 {
     public class CadastrarUsuarioMasterRequestApi
     {

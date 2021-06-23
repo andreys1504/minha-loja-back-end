@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MinhaLoja.Api.Identity.Models;
 using MinhaLoja.Api.Identity.Models.RequestApi.Account.Authenticate;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Core.Infra.Identity.Services;
+using MinhaLoja.Core.Settings;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Autenticacao;
+using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Validacao;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MinhaLoja.Api.Identity.Controllers
@@ -12,11 +21,17 @@ namespace MinhaLoja.Api.Identity.Controllers
     [Route("account-admin-loja")]
     public class AccountAdminLojaController : ApiControllerBase
     {
+        private readonly IIdentityService _identityService;
+
+        public AccountAdminLojaController(IIdentityService identityService)
+        {
+            _identityService = identityService;
+        }
+
         [HttpPost]
         [Route("authenticate")]
-        public async Task<ActionResult<string>> Authenticate(
-            [FromBody] AuthenticateRequestApi requestApi,
-            [FromServices] IIdentityService identityService)
+        public async Task<IActionResult> Authenticate(
+            [FromBody] AuthenticateRequestApi requestApi)
         {
             var request = new AutenticacaoUsuarioAdministradorRequest(
                 username: requestApi.Username,
@@ -25,31 +40,99 @@ namespace MinhaLoja.Api.Identity.Controllers
             var response = (IResponseAppService<AutenticacaoUsuarioAdministradorDataResponse>)
                 await SendRequestService(request);
 
-            if (!response.Success)
-                return Ok(response);
+            if (response.Success == false)
+            {
+                return StatusCode(400, response.Notifications[0]);
+            }
 
-            object token = identityService.GenerateToken(
+            var responseAction = GenerateToken(
+                userId: response.Data.IdUsuario,
+                sellerId: response.Data.IdVendedor,
+                username: response.Data.Username,
+                userData: response.Data,
+                permissions: response.Data.Permissoes);
+
+            return Ok(responseAction);
+        }
+
+        [HttpGet]
+        [Route("refresh-token")]
+        public async Task<IActionResult> RefreshToken(
+            [FromServices] GlobalSettings globalSettings)
+        {
+            string tokenJwt = Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrWhiteSpace(tokenJwt))
+            {
+                return StatusCode(401);
+            }
+
+            string urlValidarToken = $"{globalSettings.UrlApiAdminLoja}/{globalSettings.UrlValidateTokenAdminLoja}";
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", tokenJwt.Replace("Bearer", "").Replace("bearer", "").TrimString());
+            HttpResponseMessage respostaValidacao = await httpClient.GetAsync(urlValidarToken);
+            if (respostaValidacao.IsSuccessStatusCode == false)
+            {
+                return StatusCode(401);
+            }
+
+
+            IEnumerable<Claim> claims = _identityService.GetClaims(tokenJwt: tokenJwt);
+
+            if (claims == null)
+            {
+                throw new DomainException("Erro RefreshToken");
+            }
+
+            var user = JsonConvert.DeserializeObject<UsuarioProfissionalAutenticado>(
+                    _identityService.GetUserData(new ClaimsPrincipal(new ClaimsIdentity(claims)))
+            );
+
+            var request = new ValidacaoUsuarioAutenticadoRequest(
+                idUsuario: user.IdUsuario,
+                username: user.Username);
+
+            var response = (IResponseAppService<ValidacaoUsuarioAutenticadoDataResponse>)
+                await SendRequestService(request);
+
+            if (response.Success == false)
+            {
+                return StatusCode(400, response.Notifications[0]);
+            }
+
+            var responseAction = GenerateToken(
+                userId: user.IdUsuario,
+                sellerId: response.Data.IdVendedor,
+                username: response.Data.Username,
+                userData: response.Data,
+                permissions: response.Data.Permissoes);
+
+            return Ok(responseAction);
+        }
+
+
+        private object GenerateToken(
+            Guid userId,
+            int? sellerId,
+            string username,
+            object userData,
+            IList<string> permissions)
+        {
+            object token = _identityService.GenerateToken(
                 requestScheme: ControllerContext.HttpContext.Request.Scheme,
                 requestHost: ControllerContext.HttpContext.Request.Host.Value,
-                userId: response.Data.IdUsuario.ToString(),
-                sellerId: response.Data.IdVendedor.HasValue ? response.Data.IdVendedor.ToString() : null,
-                username: response.Data.Username,
-                userData: JsonConvert.SerializeObject(response.Data),
-                permissions: response.Data.Permissions,
+                userId: userId.ToString(),
+                sellerId: sellerId.HasValue ? sellerId.ToString() : null,
+                username: username,
+                userData: JsonConvert.SerializeObject(userData),
+                permissions: permissions,
                 roles: true);
 
-            var retorno = new
+            return new
             {
-                Success = true,
-                response.Notifications,
-                Data = new
-                {
-                    usuario = response.Data,
-                    token
-                }
+                usuario = userData,
+                token
             };
-
-            return Ok(retorno);
         }
     }
 }

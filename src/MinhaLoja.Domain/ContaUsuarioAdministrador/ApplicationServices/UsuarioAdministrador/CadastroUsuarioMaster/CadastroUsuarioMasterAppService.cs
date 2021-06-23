@@ -33,7 +33,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             CadastroUsuarioMasterRequest request, 
             CancellationToken cancellationToken)
         {
-            if (request.Validate() is false)
+            if (request.Validate() == false)
                 return ReturnNotifications(request.Notifications);
 
 
@@ -54,7 +54,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                 senha: request.Senha,
                 globalSettings: _globalSettings);
 
-            if (usuarioAdministrador.IsValid is false)
+            if (usuarioAdministrador.IsValid == false)
                 return ReturnNotifications(usuarioAdministrador.Notifications);
 
             await _usuarioAdministradorRepository.AddEntityAsync(usuarioAdministrador);

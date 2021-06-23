@@ -1,0 +1,16 @@
+#https://hub.docker.com/_/microsoft-dotnet-sdk
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as build
+WORKDIR /app
+EXPOSE 80
+
+COPY . .
+RUN dotnet restore
+
+WORKDIR /app/MinhaLoja.Api.AdminLoja
+RUN dotnet publish -c release -o published --no-restore
+
+#https://hub.docker.com/_/microsoft-dotnet-aspnet/
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app-publish
+COPY --from=build /app/MinhaLoja.Api.AdminLoja/published .
+ENTRYPOINT ["dotnet", "MinhaLoja.Api.AdminLoja.dll"]

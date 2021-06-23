@@ -13,8 +13,10 @@ namespace MinhaLoja.Core.Settings
         public bool TriggerEmails { get; set; }
         public string UrlApiAdminLoja { get; set; }
         public string URLValidateEmailUserAdministrator { get; set; }
+        public string UrlValidateTokenAdminLoja { get; set; }
         public bool PublishEventsInBus { get; set; }
         public bool SendLogErrorToStorage { get; set; }
+        public bool NotUseHttps { get; set; }
         public StorageSettings Storage { get; set; }
         public SmtpClientSettings SmtpClient { get; set; }
         public IdentitySettings Identity { get; set; }

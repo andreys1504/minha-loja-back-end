@@ -14,6 +14,7 @@ namespace MinhaLoja.Api.AdminLoja
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private GlobalSettings _globalSettings;
         private readonly string keyCacheConnectionString = "ApiSettings:Cache:ConnectionString";
         private readonly string keyCacheInstanceName = "ApiSettings:Cache:InstanceName";
         private readonly string keyApplicationInsightsConnectionString = "ApiSettings:ApplicationInsights:ConnectionString";
@@ -28,10 +29,10 @@ namespace MinhaLoja.Api.AdminLoja
             var webHostEnvironment = services.GetServiceInConfigureServices<IWebHostEnvironment>();
             IConfigurationSection configurationSection = _configuration.GetSection(nameof(GlobalSettings));
 
-            GlobalSettings globalSettings = services.LoadGlobalSettings(
+            _globalSettings = services.LoadGlobalSettings(
                 configurationSection,
                 webHostEnvironment.EnvironmentName);
-            services.RegisterDependencies(globalSettings);
+            services.RegisterDependencies(_globalSettings);
 
             services.AddCors();
             services.AddControllersCustom();
@@ -42,10 +43,10 @@ namespace MinhaLoja.Api.AdminLoja
                 options.InstanceName = _configuration.GetSection(keyCacheInstanceName).Value;
             });
             //services.AddAuthorizationApplication(); //trabalhar com Policy
-            services.AddAuthenticationCustom(globalSettings);
+            services.AddAuthenticationCustom(_globalSettings);
             services.AddSwaggerGen(setup => setup.SwaggerDoc("v1", new OpenApiInfo { Title = "Api.AdminLoja", Version = "v1" }));
             services.AddApplicationInsightsTelemetry(options => options.ConnectionString = _configuration.GetSection(keyApplicationInsightsConnectionString).Value);
-            services.AddHealthChecksCustom(globalSettings);
+            services.AddHealthChecksCustom(_globalSettings);
 
             var authenticationMiddleware = services.GetServiceInConfigureServices<IAuthenticationMiddleware>();
             authenticationMiddleware.AddAuthenticationApplication(services);
@@ -65,9 +66,14 @@ namespace MinhaLoja.Api.AdminLoja
                 app.UseSwaggerUI(setup => setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Api.AdminLoja v1"));
             }
             else
+            {
                 app.UseExceptionHandlerApplication();
+            }
 
-            app.UseHttpsRedirection();
+            if (_globalSettings.NotUseHttps == false)
+            {
+                app.UseHttpsRedirection();
+            }
             app.UseRouting();
             app.UseRequestLocalizationDefault();
             app.UseAuthentication();

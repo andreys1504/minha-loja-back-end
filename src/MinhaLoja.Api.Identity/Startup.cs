@@ -13,6 +13,7 @@ namespace MinhaLoja.Api.Identity
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private GlobalSettings _globalSettings;
 
         public Startup(IConfiguration configuration)
         {
@@ -24,10 +25,10 @@ namespace MinhaLoja.Api.Identity
             var webHostEnvironment = services.GetServiceInConfigureServices<IWebHostEnvironment>();
             IConfigurationSection configurationSection = _configuration.GetSection(nameof(GlobalSettings));
 
-            GlobalSettings globalSettings = services.LoadGlobalSettings(
+            _globalSettings = services.LoadGlobalSettings(
                 configurationSection,
                 webHostEnvironment.EnvironmentName);
-            services.RegisterDependencies(globalSettings);
+            services.RegisterDependencies(_globalSettings);
 
             services.AddCors();
             services.AddControllers();
@@ -50,9 +51,14 @@ namespace MinhaLoja.Api.Identity
                 );
             }
             else
+            {
                 app.UseExceptionHandlerApplication();
+            }
 
-            app.UseHttpsRedirection();
+            if (_globalSettings.NotUseHttps == false)
+            {
+                app.UseHttpsRedirection();
+            }
             app.UseRouting();
             app.UseRequestLocalizationDefault();
             app.UseEndpoints(endpoints =>

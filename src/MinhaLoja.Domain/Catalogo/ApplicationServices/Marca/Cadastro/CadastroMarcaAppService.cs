@@ -43,7 +43,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.Cadastro
                 nome: request.NomeMarca,
                 idUsuario: request.IdUsuario);
 
-            if (marca.IsValid is false)
+            if (marca.IsValid == false)
                 return ReturnNotifications(marca.Notifications);
 
             await _marcaRepository.AddEntityAsync(marca);
