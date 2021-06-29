@@ -13,7 +13,7 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
     public class ProdutoController : ApiControllerBase
     {
         [HttpPost]
-        [Route("cadastrar")]
+        [Route("")]
         public async Task<IActionResult> Cadastrar(
             [FromBody] CadastrarProdutoRequestApi requestApi)
         {

@@ -43,6 +43,8 @@ Uma api/worker consomem o domínio através do envio de Requests, que estão pre
 - appsettings.json
 utilizar appsettings.EXAMPLE.json para a criação das configurações em Apis e Works.
 
+Obs.: Executando as Apis via dotnet run, informar url sem https.
+
 - docker-compose
 via terminal: docker-compose up -d --build 
 

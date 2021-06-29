@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MinhaLoja.Core.Authorizations;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.AprovarCadastro;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.RejeitarCadastro;
-using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.VendedoresValidacaoCadastroPendente;
+using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.VendedoresAprovacaoCadastroPendente;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -13,11 +13,11 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
     [Route("vendedor")]
     public class VendedorController : ApiControllerBase
     {
-        [HttpGet("vendedores-validacao-pendente")]
+        [HttpGet("vendedores-aprovacao-pendente")]
         [Authorize(Roles = AuthorizationsApplications.AdminLoja.UsuarioMaster)]
-        public async Task<IActionResult> VendedoresValidacaoCadastroPendente()
+        public async Task<IActionResult> VendedoresAprovacaoCadastroPendente()
         {
-            var requestAppService = new VendedoresValidacaoCadastroPendenteRequest();
+            var requestAppService = new VendedoresAprovacaoCadastroPendenteRequest();
 
             return ReturnApi(HttpStatusCode.OK, await SendRequestService(requestAppService));
         }

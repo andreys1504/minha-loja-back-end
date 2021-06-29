@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using MinhaLoja.Core.Domain.ApplicationServices.Request;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using MinhaLoja.Core.Infra.Identity.Services;
 using MinhaLoja.Core.Mediator;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Net;
 using System.Security.Claims;
@@ -48,7 +51,7 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
             return await MediatorHandler.SendRequestServiceToHandlerAsync(request);
         }
 
-        protected ObjectResult ReturnApi(HttpStatusCode statusCode, object value = null)
+        protected IActionResult ReturnApi(HttpStatusCode statusCode, object value = null, bool valueJson = false)
         {
             if (value is IResponse response)
             {
@@ -58,7 +61,27 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
                 }
             }
 
+            if (valueJson)
+            {
+                return Content(value.ToString(), "application/json");
+            }
+
             return StatusCode((int)statusCode, value);
+        }
+
+        protected string SerializeReturnApi(object data)
+        {
+            return JsonConvert.SerializeObject(
+                value: data,
+                settings: new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        }
+
+        protected DistributedCacheEntryOptions GetOptionsSaveCache(TimeSpan? expiration = null)
+        {
+            var opcoesCache = new DistributedCacheEntryOptions();
+            opcoesCache.SetAbsoluteExpiration(expiration ?? TimeSpan.FromMinutes(1));
+
+            return opcoesCache;
         }
     }
 }

@@ -4,10 +4,10 @@ using MinhaLoja.Core.Domain.ApplicationServices.Response;
 using System;
 using System.Collections.Generic;
 
-namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.VendedoresValidacaoCadastroPendente
+namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.VendedoresAprovacaoCadastroPendente
 {
-    public class VendedoresValidacaoCadastroPendenteRequest : RequestAppService,
-        IRequest<IResponseAppService<List<VendedoresValidacaoCadastroPendenteDataResponse>>>
+    public class VendedoresAprovacaoCadastroPendenteRequest : RequestAppService,
+        IRequest<IResponseAppService<List<VendedoresAprovacaoCadastroPendenteDataResponse>>>
     {
         public override Guid IdUsuario { get; }
 

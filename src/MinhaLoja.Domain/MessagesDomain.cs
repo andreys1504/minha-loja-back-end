@@ -16,6 +16,11 @@
             public const string TipoProduto_Cadastro_CaracteristicasTipoProdutoIsNotNull = "Informe Caracteristica(s) do Tipo Produto";
             public const string TipoProduto_Cadastro_CaracteristicasTipoProdutoCount = "Informe Caracteristica(s) do Tipo Produto";
 
+            public const string TipoProduto_Cadastro_NomeCaracteristicaIsNotNullOrWhiteSpace = "Informe o Nome da Caracteristica";
+            public const string TipoProduto_Cadastro_NomeCaracteristicaIsLowerOrEqualsThan = "Informe uma Caracteristica entre 3 e 30 caracteres";
+            public const string TipoProduto_Cadastro_NomeCaracteristicaIsGreaterOrEqualsThan = "Informe uma Caracteristica entre 3 e 30 caracteres";
+            public const string TipoProduto_Cadastro_ObservacaoCaracteristicaIsLowerOrEqualsThan = "Informe uma Caracteristica de até 35 caracteristicas";
+
 
             public const string TipoProduto_Cadastro_TipoProdutoExistente = "Tipo Produto existente no sistema";
             public const string TipoProduto_Cadastro_TipoProdutoSuperiorNulo = "Tipo Produto Superior/Pai inexistente";
