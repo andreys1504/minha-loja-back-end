@@ -3,7 +3,6 @@ using MinhaLoja.Core.Domain.Entities.AggregateBase;
 using MinhaLoja.Core.Domain.Entities.AggregateRootBase;
 using MinhaLoja.Core.Domain.Repositories;
 using MinhaLoja.Infra.Data.DataSources;
-using MinhaLoja.Infra.Data.DataSources.DatabaseMain;
 using System.Linq;
 using System.Threading.Tasks;
 

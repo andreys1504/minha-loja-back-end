@@ -35,7 +35,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
         {
             var claims = new List<Claim>
             {
-                new Claim("Id", userId),
+                new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim("SellerId", sellerId ?? ""),
                 new Claim(ClaimTypes.Name, username),
                 new Claim(ClaimTypes.UserData, userData)
@@ -48,6 +48,19 @@ namespace MinhaLoja.Infra.Api.Identity.Services
                     claims.Add(new Claim(ClaimTypes.Role, permissions[0]));
 
             var dateTimeNow = DateTime.UtcNow;
+            DateTime expires;
+            double expiresTotalSeconds;
+            if (_globalSettings.Identity.IsHours)
+            {
+                expires = dateTimeNow.AddHours(_globalSettings.Identity.ExpiresToken);
+                expiresTotalSeconds = TimeSpan.FromHours(_globalSettings.Identity.ExpiresToken).TotalSeconds;
+            }
+            else
+            {
+                expires = dateTimeNow.AddDays(_globalSettings.Identity.ExpiresToken);
+                expiresTotalSeconds = TimeSpan.FromDays(_globalSettings.Identity.ExpiresToken).TotalSeconds;
+            }
+
             var tokenHandler = new JwtSecurityTokenHandler();
 
             string currentIssuer = $"{requestScheme}://{requestHost}";
@@ -61,9 +74,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
             {
                 Issuer = currentIssuer,
                 Subject = new ClaimsIdentity(claims),
-                Expires = _globalSettings.Identity.IsHours
-                           ? dateTimeNow.AddHours(1)
-                           : dateTimeNow.AddDays(_globalSettings.Identity.ExpiresToken),
+                Expires = expires,
                 SigningCredentials = signingCredentials
             });
             string token = tokenHandler.WriteToken(securityToken);
@@ -72,10 +83,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
             {
                 access_token = token,
                 token_type = "Bearer",
-                expires_in = (_globalSettings.Identity.IsHours
-                    ? TimeSpan.FromHours(_globalSettings.Identity.ExpiresToken)
-                    : TimeSpan.FromDays(_globalSettings.Identity.ExpiresToken)
-                ).TotalSeconds
+                expires_in = expiresTotalSeconds
             };
         }
 
@@ -86,7 +94,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
 
         public string GetUserId(ClaimsPrincipal user)
         {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == "Id")?.Value;
+            return user?.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
         public string GetSellerId(ClaimsPrincipal user)

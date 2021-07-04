@@ -17,12 +17,10 @@ namespace MinhaLoja.Infra.Identity.IdentityStorage
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //SecurityKeys
-            modelBuilder
-                .Entity<SecurityKeyWithPrivate>()
+            modelBuilder.Entity<SecurityKeyWithPrivate>()
                 .ToTable("SecurityKeys");
 
-            modelBuilder
-                .Entity<SecurityKeyWithPrivate>()
+            modelBuilder.Entity<SecurityKeyWithPrivate>()
                 .HasKey(securityKey => securityKey.Id);
         }
     }
