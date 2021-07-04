@@ -10,12 +10,12 @@ using System.Security.Claims;
 
 namespace MinhaLoja.Infra.Api.Identity.Services
 {
-    public class IdentityService : IIdentityService
+    public class TokenService : ITokenService
     {
         private readonly GlobalSettings _globalSettings;
         private readonly IJsonWebKeySetService _jsonWebKeySetService;
 
-        public IdentityService(
+        public TokenService(
             GlobalSettings globalSettings,
             IJsonWebKeySetService jsonWebKeySetService)
         {

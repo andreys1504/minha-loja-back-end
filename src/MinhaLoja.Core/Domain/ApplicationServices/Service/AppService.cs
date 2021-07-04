@@ -33,14 +33,10 @@ namespace MinhaLoja.Core.Domain.ApplicationServices.Service
         }
 
 
-        #region Auxiliares
-
         private async Task DisposeTransactionAsync()
         {
             if (_dependenciesAppService.ApplicationTransaction != null)
                 await _dependenciesAppService.ApplicationTransaction.DisposeAsync();
         }
-
-        #endregion
     }
 }

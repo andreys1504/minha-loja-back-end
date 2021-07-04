@@ -163,7 +163,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
                 codigoGrupoTipoProduto: codigoGrupoTipoProduto,
                 numeroAtualOrdemHierarquiaGrupo: numeroAtualOrdemHierarquiaGrupo,
                 caracteristicasTipoProduto: request.CaracteristicasTipoProduto,
-                idUsuario: request.IdUsuario);
+                idUsuario: request.IdUsuarioEnvioRequest);
 
             if (tipoProduto.IsValid == false)
                 return tipoProduto;

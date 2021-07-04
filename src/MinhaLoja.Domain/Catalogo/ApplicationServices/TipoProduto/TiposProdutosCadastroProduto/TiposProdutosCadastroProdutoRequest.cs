@@ -14,7 +14,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.TiposProduto
         }
 
         public int? IdTipoProdutoSuperior { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

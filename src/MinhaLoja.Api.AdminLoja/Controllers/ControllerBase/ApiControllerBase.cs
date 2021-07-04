@@ -20,14 +20,14 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
             get => (IMediatorHandler)HttpContext.RequestServices.GetService(typeof(IMediatorHandler));
         }
 
-        private IIdentityService IdentityService
+        private ITokenService TokenService
         {
-            get => (IIdentityService)HttpContext.RequestServices.GetService(typeof(IIdentityService));
+            get => (ITokenService)HttpContext.RequestServices.GetService(typeof(ITokenService));
         }
 
         protected Guid IdUsuario(ClaimsPrincipal user)
         {
-            string id2Usuario = IdentityService.GetUserId(user);
+            string id2Usuario = TokenService.GetUserId(user);
             _ = Guid.TryParse(id2Usuario, out Guid idUsuarioRetorno);
 
             return idUsuarioRetorno;
@@ -35,7 +35,7 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
 
         protected int? IdVendedor(ClaimsPrincipal user)
         {
-            string idVendedor = IdentityService.GetSellerId(user);
+            string idVendedor = TokenService.GetSellerId(user);
             if (string.IsNullOrWhiteSpace(idVendedor))
             {
                 return null;

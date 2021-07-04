@@ -41,7 +41,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.Cadastro
 
             var marca = new Entities.Marca(
                 nome: request.NomeMarca,
-                idUsuario: request.IdUsuario);
+                idUsuario: request.IdUsuarioEnvioRequest);
 
             if (marca.IsValid == false)
                 return ReturnNotifications(marca.Notifications);

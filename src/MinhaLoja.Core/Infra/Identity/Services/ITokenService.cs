@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace MinhaLoja.Core.Infra.Identity.Services
 {
-    public interface IIdentityService
+    public interface ITokenService
     {
         object GenerateToken(
             string requestScheme,

@@ -24,7 +24,7 @@ namespace MinhaLoja.Core.Domain.ApplicationServices.Request
         public string RequestType { get; set; }
 
         [JsonIgnore]
-        public abstract Guid IdUsuario { get; }
+        public abstract Guid IdUsuarioEnvioRequest { get; }
 
         public abstract bool Validate();
     }

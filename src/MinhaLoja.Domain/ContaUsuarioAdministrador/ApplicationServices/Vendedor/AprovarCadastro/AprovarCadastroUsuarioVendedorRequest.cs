@@ -15,11 +15,11 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
             Guid idUsuario)
         {
             IdVendedor = idVendedor;
-            IdUsuario = idUsuario;
+            IdUsuarioEnvioRequest = idUsuario;
         }
 
         public int IdVendedor { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

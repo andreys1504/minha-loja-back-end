@@ -30,7 +30,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
             IdTipoProduto = idTipoProduto;
             CaracteristicaProduto = caracteristicaProduto;
             IdVendedor = idVendedor;
-            IdUsuario = idUsuario;
+            IdUsuarioEnvioRequest = idUsuario;
         }
 
         public string NomeProduto { get; private set; }
@@ -41,7 +41,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
         public int IdTipoProduto { get; private set; }
         public int? IdVendedor { get; private set; }
         public IList<(int idCaracteristicaProduto, string descricao)> CaracteristicaProduto { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

@@ -9,10 +9,10 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
     {
         public ExcluirVendedoresCadastroRejeitadoRequest()
         {
-            IdUsuario = Guid.Empty;
+            IdUsuarioEnvioRequest = Guid.Empty;
         }
 
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

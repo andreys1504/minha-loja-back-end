@@ -26,7 +26,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
         public string Senha { get; private set; }
         public string Email { get; private set; }
         public string Cnpj { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

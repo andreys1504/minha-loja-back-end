@@ -24,7 +24,9 @@ namespace MinhaLoja.Tests.Fakes.Infra.Data.Repositories
         public Task AddEntityAsync(TAggregateRoot entity)
         {
             if (_entities != null)
+            {
                 _entities.Add(entity);
+            }
 
             return Task.CompletedTask;
         }
@@ -33,9 +35,10 @@ namespace MinhaLoja.Tests.Fakes.Infra.Data.Repositories
         {
             if(_entities != null && _entities.Count > 0)
             {
-                var entitySelected = _entities.FirstOrDefault(entity => entity.Id == entity.Id);
-                if (entitySelected != null)
+                if (_entities.Any(_entity => _entity.Id == entity.Id))
+                {
                     _entities.Remove(entity);
+                }
             }
         }
 
@@ -57,7 +60,9 @@ namespace MinhaLoja.Tests.Fakes.Infra.Data.Repositories
         public IQueryable<TAggregateRoot> GetEntity(bool asNoTracking = true)
         {
             if (_entities == null)
+            {
                 return null;
+            }
 
             return _entities.AsQueryable();
         }
@@ -65,9 +70,21 @@ namespace MinhaLoja.Tests.Fakes.Infra.Data.Repositories
         public IQueryable<TAggregate> GetEntityAggregate<TAggregate>() where TAggregate : Aggregate<TAggregateRoot>
         {
             if (_entitiesAggregate == null)
+            {
                 return null;
+            }
 
-            return (IQueryable<TAggregate>)_entitiesAggregate;
+            var entitiesReturn = new List<TAggregate>();
+
+            foreach (var entity in _entitiesAggregate)
+            {
+                if (entity.GetType() == typeof(TAggregate))
+                {
+                    entitiesReturn.Add((TAggregate)entity);
+                }
+            }
+
+            return entitiesReturn.AsQueryable();
         }
     }
 }

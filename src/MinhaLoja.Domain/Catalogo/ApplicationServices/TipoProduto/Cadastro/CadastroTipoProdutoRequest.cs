@@ -20,13 +20,13 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
             NomeTipoProduto = nomeTipoProduto.TrimString();
             IdTipoProdutoSuperior = idTipoProdutoSuperior;
             CaracteristicasTipoProduto = caracteristicasTipoProduto;
-            IdUsuario = idUsuario;
+            IdUsuarioEnvioRequest = idUsuario;
         }
 
         public string NomeTipoProduto { get; private set; }
         public int? IdTipoProdutoSuperior { get; private set; }
         public IList<(string nome, string observacao)> CaracteristicasTipoProduto { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

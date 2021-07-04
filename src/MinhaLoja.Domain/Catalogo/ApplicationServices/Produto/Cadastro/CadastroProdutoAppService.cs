@@ -60,7 +60,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Produto.Cadastro
                 caracteristicasProduto: request.CaracteristicaProduto,
                 idTipoProduto: request.IdTipoProduto,
                 idVendedor: request.IdVendedor,
-                idUsuario: request.IdUsuario);
+                idUsuario: request.IdUsuarioEnvioRequest);
 
             if (produto.IsValid == false)
                 return ReturnNotifications(produto.Notifications);

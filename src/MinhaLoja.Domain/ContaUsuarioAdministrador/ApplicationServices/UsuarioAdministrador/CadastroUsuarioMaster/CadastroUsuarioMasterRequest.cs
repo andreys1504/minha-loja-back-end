@@ -19,13 +19,13 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             Nome = nome.TrimString();
             Username = username.TrimString();
             Senha = senha.TrimString();
-            IdUsuario = idUsuario;
+            IdUsuarioEnvioRequest = idUsuario;
         }
 
         public string Nome { get; private set; }
         public string Username { get; private set; }
         public string Senha { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

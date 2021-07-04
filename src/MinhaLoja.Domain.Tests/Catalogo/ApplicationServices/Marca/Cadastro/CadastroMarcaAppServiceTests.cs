@@ -18,7 +18,8 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Marca.Cadastro
             //arrange
             var request = new CadastroMarcaRequest(
                 nomeMarca: "Nike",
-                idUsuario: Guid.NewGuid());
+                idUsuario: Guid.NewGuid()
+            );
 
             var marcas = new List<Domain.Catalogo.Entities.Marca>();
 

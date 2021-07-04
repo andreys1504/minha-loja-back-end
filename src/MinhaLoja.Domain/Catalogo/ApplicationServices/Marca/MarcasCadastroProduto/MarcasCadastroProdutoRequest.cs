@@ -8,7 +8,7 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.MarcasCadastroProd
 {
     public class MarcasCadastroProdutoRequest : RequestAppService, IRequest<IResponseAppService<IList<MarcasCadastroProdutoDataResponse>>>
     {
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

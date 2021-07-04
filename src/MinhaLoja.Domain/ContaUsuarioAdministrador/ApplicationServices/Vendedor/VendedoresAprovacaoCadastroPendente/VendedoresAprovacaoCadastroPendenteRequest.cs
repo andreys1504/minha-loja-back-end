@@ -9,7 +9,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedo
     public class VendedoresAprovacaoCadastroPendenteRequest : RequestAppService,
         IRequest<IResponseAppService<List<VendedoresAprovacaoCadastroPendenteDataResponse>>>
     {
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {

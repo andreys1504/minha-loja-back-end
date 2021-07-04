@@ -52,7 +52,7 @@ namespace MinhaLoja.Infra.Ioc
             //Identity
             services.AddDbContextPool<IdentityMinhaLojaContext>(options => options.UseSqlServer(settings.DatabaseConnectionString));
             services.AddSingleton<IAuthenticationMiddleware>(new AuthenticationMiddleware());
-            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<ITokenService, TokenService>();
         }
 
 

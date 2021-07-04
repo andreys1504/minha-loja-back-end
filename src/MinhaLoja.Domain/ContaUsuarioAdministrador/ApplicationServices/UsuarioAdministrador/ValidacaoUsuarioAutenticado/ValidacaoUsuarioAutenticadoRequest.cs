@@ -13,17 +13,17 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             Guid idUsuario,
             string username)
         {
-            IdUsuario = idUsuario;
+            IdUsuarioEnvioRequest = idUsuario;
             Username = username;
         }
 
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
         public string Username { get; private set; }
 
         public override bool Validate()
         {
             AddNotifications(new Contract<Notification>()
-                .AreNotEquals(this.IdUsuario, Guid.Empty, "IdUsuário inválido")
+                .AreNotEquals(this.IdUsuarioEnvioRequest, Guid.Empty, "IdUsuário inválido")
                 .AreNotEquals(this.Username, Guid.Empty, "Username inválido")
             );
 

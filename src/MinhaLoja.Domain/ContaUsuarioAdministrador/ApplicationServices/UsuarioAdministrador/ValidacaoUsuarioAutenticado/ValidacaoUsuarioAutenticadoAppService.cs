@@ -38,7 +38,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
                     .GetEntity(asNoTracking: false)
                     .Include(usuario => usuario.Vendedor)
                     .Where(UsuarioAdministradorQueries.ValidarUsuarioAutenticado(
-                        idUsuario: request.IdUsuario,
+                        idUsuario: request.IdUsuarioEnvioRequest,
                         username: request.Username))
                     .Select(usuario => new
                     {

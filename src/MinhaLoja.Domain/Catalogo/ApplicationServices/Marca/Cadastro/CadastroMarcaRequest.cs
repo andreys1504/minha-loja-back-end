@@ -15,11 +15,11 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.Marca.Cadastro
             Guid idUsuario)
         {
             NomeMarca = nomeMarca.TrimString();
-            IdUsuario = idUsuario;
+            IdUsuarioEnvioRequest = idUsuario;
         }
 
         public string NomeMarca { get; private set; }
-        public override Guid IdUsuario { get; }
+        public override Guid IdUsuarioEnvioRequest { get; }
 
         public override bool Validate()
         {
