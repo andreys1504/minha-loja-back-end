@@ -6,7 +6,6 @@ using System;
 
 namespace MinhaLoja.Worker.UnapprovedRegistrationSellers
 {
-    //TODO: erros globais
     public class Program
     {
         public static void Main()
@@ -22,7 +21,7 @@ namespace MinhaLoja.Worker.UnapprovedRegistrationSellers
                             .Build();
                 })
                 .ConfigureFunctionsWorkerDefaults()
-                .ConfigureServices((services) =>
+                .ConfigureServices(services =>
                 {
                     string environmentName = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
                     IConfigurationSection configurationSection = configuration.GetSection(nameof(GlobalSettings));

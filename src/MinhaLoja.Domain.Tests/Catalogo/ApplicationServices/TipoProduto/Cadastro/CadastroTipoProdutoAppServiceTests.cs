@@ -15,7 +15,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.TipoProduto.Cadast
     {
         [Fact(DisplayName = "Sucesso Cadastro Tipo Produto")]
         [Trait("Domain", nameof(CadastroTipoProdutoAppService))]
-        public void RetornarSucesso()
+        public void RetornarSucessoCadastroTipoProduto()
         {
             //arrange
             var caracteristicas = new List<(string nome, string observacao)>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using MinhaLoja.Core.Infra.Identity.Middlewares;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Infra.Api.StartupConfigurations;
@@ -33,6 +34,10 @@ namespace MinhaLoja.Api.Identity
             services.AddCors();
             services.AddControllers();
             services.AddMemoryCache();
+            services.AddSwaggerGen(setup =>
+            {
+                setup.SwaggerDoc("v1", new OpenApiInfo { Title = "MinhaLoja.Api.Identity", Version = "v1" });
+            });
             services.AddApplicationInsightsTelemetry(options => options.ConnectionString = _configuration.GetSection("ApiSettings:ApplicationInsights:ConnectionString").Value);
 
             var authenticationMiddleware = services.GetServiceInConfigureServices<IAuthenticationMiddleware>();
@@ -49,6 +54,8 @@ namespace MinhaLoja.Api.Identity
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
                 );
+                app.UseSwagger();
+                app.UseSwaggerUI(setup => setup.SwaggerEndpoint("/swagger/v1/swagger.json", "MinhaLoja.Api.Identity v1"));
             }
             else
             {

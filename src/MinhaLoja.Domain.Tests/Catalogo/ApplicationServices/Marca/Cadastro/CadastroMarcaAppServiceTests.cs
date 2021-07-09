@@ -13,7 +13,7 @@ namespace MinhaLoja.Domain.Tests.Catalogo.ApplicationServices.Marca.Cadastro
     {
         [Fact(DisplayName = "Sucesso Cadastro Marca")]
         [Trait("Domain", nameof(CadastroMarcaAppService))]
-        public void RetornarSucesso()
+        public void RetornarSucessoCadastroMarca()
         {
             //arrange
             var request = new CadastroMarcaRequest(
