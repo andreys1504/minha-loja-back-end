@@ -14,7 +14,7 @@ namespace MinhaLoja.Api.Identity.Controllers
 
         protected async Task<object> SendRequestService(RequestAppService request)
         {
-            return await MediatorHandler.SendRequestServiceToHandlerAsync(request);
+            return await MediatorHandler.SendRequestToHandlerAsync(request);
         }
     }
 }

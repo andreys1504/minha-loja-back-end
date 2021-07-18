@@ -21,11 +21,15 @@ namespace MinhaLoja.Api.Identity.Controllers
     [Route("account-admin-loja")]
     public class AccountAdminLojaController : ApiControllerBase
     {
-        private readonly ITokenService _tokenService;
+        private readonly ITokenManagementService _tokenService;
+        private readonly IClaimService _claimService;
 
-        public AccountAdminLojaController(ITokenService tokenService)
+        public AccountAdminLojaController(
+            ITokenManagementService tokenService,
+            IClaimService claimService)
         {
             _tokenService = tokenService;
+            _claimService = claimService;
         }
 
         [HttpPost]
@@ -77,7 +81,7 @@ namespace MinhaLoja.Api.Identity.Controllers
             }
 
 
-            IEnumerable<Claim> claims = _tokenService.GetClaims(tokenJwt: tokenJwt);
+            IEnumerable<Claim> claims = _claimService.GetClaims(tokenJwt: tokenJwt);
 
             if (claims == null)
             {
@@ -85,7 +89,7 @@ namespace MinhaLoja.Api.Identity.Controllers
             }
 
             var user = JsonConvert.DeserializeObject<UsuarioProfissionalAutenticado>(
-                    _tokenService.GetUserData(new ClaimsPrincipal(new ClaimsIdentity(claims)))
+                    _claimService.GetUserData(new ClaimsPrincipal(new ClaimsIdentity(claims)))
             );
 
             var request = new ValidacaoUsuarioAutenticadoRequest(

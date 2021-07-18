@@ -38,6 +38,7 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
         }
 
 
+        //TODO: remover
         [HttpGet("token-valido")]
         public IActionResult TokenValido()
         {

@@ -16,7 +16,7 @@ namespace MinhaLoja.Tests.Fakes.Mediator
             return Task.CompletedTask;
         }
 
-        public Task<object> SendRequestServiceToHandlerAsync(object request)
+        public Task<object> SendRequestToHandlerAsync(object request)
         {
             return Task.FromResult<object>("");
         }

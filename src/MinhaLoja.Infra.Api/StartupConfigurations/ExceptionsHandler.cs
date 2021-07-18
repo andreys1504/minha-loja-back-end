@@ -20,9 +20,9 @@ namespace MinhaLoja.Infra.Api.StartupConfigurations
 
                     var errorHandler = (ILogErrorHandler)context.RequestServices.GetService(typeof(ILogErrorHandler));
                     var globalSettings = (GlobalSettings)context.RequestServices.GetService(typeof(GlobalSettings));
-                    var tokenService = (ITokenService)context.RequestServices.GetService(typeof(ITokenService));
+                    var claimService = (IClaimService)context.RequestServices.GetService(typeof(IClaimService));
 
-                    string userId = tokenService.GetUserId(context.User);
+                    string userId = claimService.GetUserId(context.User);
 
                     var error = new ErrorApplicationModel
                     {

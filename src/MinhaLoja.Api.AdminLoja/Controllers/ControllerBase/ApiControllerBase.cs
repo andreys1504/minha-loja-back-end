@@ -20,14 +20,14 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
             get => (IMediatorHandler)HttpContext.RequestServices.GetService(typeof(IMediatorHandler));
         }
 
-        private ITokenService TokenService
+        private IClaimService ClaimService
         {
-            get => (ITokenService)HttpContext.RequestServices.GetService(typeof(ITokenService));
+            get => (IClaimService)HttpContext.RequestServices.GetService(typeof(IClaimService));
         }
 
         protected Guid IdUsuario(ClaimsPrincipal user)
         {
-            string id2Usuario = TokenService.GetUserId(user);
+            string id2Usuario = ClaimService.GetUserId(user);
             _ = Guid.TryParse(id2Usuario, out Guid idUsuarioRetorno);
 
             return idUsuarioRetorno;
@@ -35,7 +35,7 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
 
         protected int? IdVendedor(ClaimsPrincipal user)
         {
-            string idVendedor = TokenService.GetSellerId(user);
+            string idVendedor = ClaimService.GetSellerId(user);
             if (string.IsNullOrWhiteSpace(idVendedor))
             {
                 return null;
@@ -48,7 +48,7 @@ namespace MinhaLoja.Api.AdminLoja.Controllers
 
         protected async Task<object> SendRequestService(RequestAppService request)
         {
-            return await MediatorHandler.SendRequestServiceToHandlerAsync(request);
+            return await MediatorHandler.SendRequestToHandlerAsync(request);
         }
 
         protected IActionResult ReturnApi(HttpStatusCode statusCode, object value = null, bool valueJson = false)

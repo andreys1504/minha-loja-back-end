@@ -14,7 +14,7 @@ namespace MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Usuario
             string username)
         {
             IdUsuarioEnvioRequest = idUsuario;
-            Username = username;
+            Username = username.TrimString();
         }
 
         public override Guid IdUsuarioEnvioRequest { get; }

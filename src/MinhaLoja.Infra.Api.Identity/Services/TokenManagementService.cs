@@ -1,21 +1,21 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using MinhaLoja.Core.Infra.Identity.Services;
 using MinhaLoja.Core.Settings;
 using NetDevPack.Security.JwtSigningCredentials.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
 namespace MinhaLoja.Infra.Api.Identity.Services
 {
-    public class TokenService : ITokenService
+    public class TokenManagementService : ITokenManagementService
     {
         private readonly GlobalSettings _globalSettings;
         private readonly IJsonWebKeySetService _jsonWebKeySetService;
 
-        public TokenService(
+        public TokenManagementService(
             GlobalSettings globalSettings,
             IJsonWebKeySetService jsonWebKeySetService)
         {
@@ -61,7 +61,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
                 expiresTotalSeconds = TimeSpan.FromDays(_globalSettings.Identity.ExpiresToken).TotalSeconds;
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenHandler = new JsonWebTokenHandler();
 
             string currentIssuer = $"{requestScheme}://{requestHost}";
             if (string.IsNullOrWhiteSpace(_globalSettings.Identity.Issuer) == false)
@@ -70,14 +70,14 @@ namespace MinhaLoja.Infra.Api.Identity.Services
             }
 
             SigningCredentials signingCredentials = _jsonWebKeySetService.GetCurrentSigningCredentials();
-            SecurityToken securityToken = tokenHandler.CreateToken(new SecurityTokenDescriptor
+            string token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = currentIssuer,
+                Audience = "TESTE", //TODO
                 Subject = new ClaimsIdentity(claims),
                 Expires = expires,
                 SigningCredentials = signingCredentials
             });
-            string token = tokenHandler.WriteToken(securityToken);
 
             return new
             {
@@ -87,27 +87,25 @@ namespace MinhaLoja.Infra.Api.Identity.Services
             };
         }
 
-        public string GetUserData(ClaimsPrincipal user)
+        public bool ValidateToken(
+            string token,
+            string requestScheme,
+            string requestHost)
         {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.UserData)?.Value;
-        }
+            var tokenHandler = new JsonWebTokenHandler();
+            var currentIssuer = $"{requestScheme}://{requestHost}";
+            SigningCredentials signingCredentials = _jsonWebKeySetService.GetCurrentSigningCredentials();
 
-        public string GetUserId(ClaimsPrincipal user)
-        {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
-        }
+            TokenValidationResult result = tokenHandler.ValidateToken(
+                token,
+                new TokenValidationParameters
+                {
+                    ValidIssuer = currentIssuer,
+                    ValidAudience = "TESTE", //TODO
+                    IssuerSigningKey = signingCredentials.Key
+                });
 
-        public string GetSellerId(ClaimsPrincipal user)
-        {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == "SellerId")?.Value;
-        }
-
-        public IEnumerable<Claim> GetClaims(string tokenJwt)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            JwtSecurityToken jwtSecurityToken = tokenHandler.ReadJwtToken(tokenJwt.Replace("Bearer", "").Trim());
-
-            return jwtSecurityToken.Claims;
+            return result.IsValid;
         }
     }
 }

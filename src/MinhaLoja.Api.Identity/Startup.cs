@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using MinhaLoja.Core.Infra.Identity.Middlewares;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Infra.Api.StartupConfigurations;
+using MinhaLoja.Infra.Ioc;
 using NetDevPack.Security.JwtSigningCredentials.AspNetCore;
 
 namespace MinhaLoja.Api.Identity
@@ -29,7 +30,7 @@ namespace MinhaLoja.Api.Identity
             _globalSettings = services.LoadGlobalSettings(
                 configurationSection,
                 webHostEnvironment.EnvironmentName);
-            services.RegisterDependencies(_globalSettings);
+            services.RegisterDependenciesForApiIdentity(_globalSettings);
 
             services.AddCors();
             services.AddControllers();

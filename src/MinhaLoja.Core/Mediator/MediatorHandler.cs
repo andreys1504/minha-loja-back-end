@@ -38,7 +38,7 @@ namespace MinhaLoja.Core.Mediator
             await _mediator.Publish(@event);
         }
 
-        public async Task<object> SendRequestServiceToHandlerAsync(object request)
+        public async Task<object> SendRequestToHandlerAsync(object request)
         {
             return await _mediator.Send(request);
         }

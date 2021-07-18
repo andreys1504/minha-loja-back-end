@@ -60,10 +60,10 @@ namespace MinhaLoja.Domain.Catalogo.ApplicationServices.TipoProduto.Cadastro
                 foreach (var caracteristica in this.CaracteristicasTipoProduto)
                 {
                     AddNotifications(new Contract<Notification>()
-                        .IsNotNullOrWhiteSpace(caracteristica.nome, $"Caracteristica[{indice}].Nome", MensagensTipoProduto.TipoProduto_Cadastro_NomeCaracteristicaIsNotNullOrWhiteSpace)
-                        .IsLowerOrEqualsThan(caracteristica.nome, 30, $"Caracteristica[{indice}].Nome", MensagensTipoProduto.TipoProduto_Cadastro_NomeCaracteristicaIsLowerOrEqualsThan)
-                        .IsGreaterOrEqualsThan(caracteristica.nome, 3, $"Caracteristica[{indice}].Nome", MensagensTipoProduto.TipoProduto_Cadastro_NomeCaracteristicaIsGreaterOrEqualsThan)
-                        .IsLowerOrEqualsThan(caracteristica.observacao, 30, $"Caracteristica[{indice}].Observacao", MensagensTipoProduto.TipoProduto_Cadastro_ObservacaoCaracteristicaIsLowerOrEqualsThan)
+                        .IsNotNullOrWhiteSpace(caracteristica.nome.TrimString(), $"Caracteristica[{indice}].Nome", MensagensTipoProduto.TipoProduto_Cadastro_NomeCaracteristicaIsNotNullOrWhiteSpace)
+                        .IsLowerOrEqualsThan(caracteristica.nome.TrimString(), 30, $"Caracteristica[{indice}].Nome", MensagensTipoProduto.TipoProduto_Cadastro_NomeCaracteristicaIsLowerOrEqualsThan)
+                        .IsGreaterOrEqualsThan(caracteristica.nome.TrimString(), 3, $"Caracteristica[{indice}].Nome", MensagensTipoProduto.TipoProduto_Cadastro_NomeCaracteristicaIsGreaterOrEqualsThan)
+                        .IsLowerOrEqualsThan(caracteristica.observacao.TrimString(), 30, $"Caracteristica[{indice}].Observacao", MensagensTipoProduto.TipoProduto_Cadastro_ObservacaoCaracteristicaIsLowerOrEqualsThan)
                     );
 
                     indice++;

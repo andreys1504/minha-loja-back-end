@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MinhaLoja.Api.AdminLoja.Configurations.StartupConfigurations;
-using MinhaLoja.Core.Infra.Identity.Middlewares;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Infra.Api.StartupConfigurations;
+using MinhaLoja.Infra.Ioc;
 
 namespace MinhaLoja.Api.AdminLoja
 {
@@ -47,9 +47,6 @@ namespace MinhaLoja.Api.AdminLoja
             services.AddSwaggerGen(setup => setup.SwaggerDoc("v1", new OpenApiInfo { Title = "Api.AdminLoja", Version = "v1" }));
             services.AddApplicationInsightsTelemetry(options => options.ConnectionString = _configuration.GetSection(keyApplicationInsightsConnectionString).Value);
             services.AddHealthChecksCustom(_globalSettings);
-
-            var authenticationMiddleware = services.GetServiceInConfigureServices<IAuthenticationMiddleware>();
-            authenticationMiddleware.AddAuthenticationApplication(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

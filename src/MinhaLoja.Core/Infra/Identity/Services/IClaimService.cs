@@ -3,18 +3,8 @@ using System.Security.Claims;
 
 namespace MinhaLoja.Core.Infra.Identity.Services
 {
-    public interface ITokenService
+    public interface IClaimService
     {
-        object GenerateToken(
-            string requestScheme,
-            string requestHost,
-            string userId,
-            string sellerId,
-            string username,
-            string userData,
-            IList<string> permissions,
-            bool roles);
-        
         string GetUserData(ClaimsPrincipal user);
 
         string GetUserId(ClaimsPrincipal user);

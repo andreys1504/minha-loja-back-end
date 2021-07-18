@@ -29,7 +29,7 @@ namespace MinhaLoja.Worker.UnapprovedRegistrationSellers
             {
                 var mediatorHandler = (IMediatorHandler)scope.ServiceProvider.GetService(typeof(IMediatorHandler));
                 var request = new ExcluirVendedoresCadastroRejeitadoRequest();
-                var response = (IResponseAppService<bool>)await mediatorHandler.SendRequestServiceToHandlerAsync(request);
+                var response = (IResponseAppService<bool>)await mediatorHandler.SendRequestToHandlerAsync(request);
 
                 logger.LogInformation($"Sucesso exclusões: {response.Success}");
             }

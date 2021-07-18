@@ -43,7 +43,7 @@ namespace MinhaLoja.Infra.Ioc
             MappingDependenciesRepositories.RegisterMappings(services);
         }
         
-        public static void RegisterDependenciesWithIdentity(
+        public static void RegisterDependenciesForApiIdentity(
             this IServiceCollection services,
             GlobalSettings settings)
         {
@@ -52,7 +52,7 @@ namespace MinhaLoja.Infra.Ioc
             //Identity
             services.AddDbContextPool<IdentityMinhaLojaContext>(options => options.UseSqlServer(settings.DatabaseConnectionString));
             services.AddSingleton<IAuthenticationMiddleware>(new AuthenticationMiddleware());
-            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<ITokenManagementService, TokenManagementService>();
         }
 
 
@@ -60,6 +60,8 @@ namespace MinhaLoja.Infra.Ioc
             IServiceCollection services,
             GlobalSettings settings)
         {
+            services.AddTransient<IClaimService, ClaimService>();
+
             //Data
             services.AddDbContextPool<MinhaLojaContext>(options =>
                 options.UseSqlServer(settings.DatabaseConnectionString)

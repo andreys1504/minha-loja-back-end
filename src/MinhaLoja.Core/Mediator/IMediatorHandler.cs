@@ -9,6 +9,6 @@ namespace MinhaLoja.Core.Mediator
 
         Task SendEventToHandlersAsync(object @event);
 
-        Task<object> SendRequestServiceToHandlerAsync(object request);
+        Task<object> SendRequestToHandlerAsync(object request);
     }
 }

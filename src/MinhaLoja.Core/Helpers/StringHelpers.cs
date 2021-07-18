@@ -16,7 +16,7 @@
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                return "";
+                return value;
             }
 
             value = value.Trim();
