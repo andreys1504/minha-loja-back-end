@@ -38,7 +38,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
                 new Claim(ClaimTypes.NameIdentifier, userId),
                 new Claim("SellerId", sellerId ?? ""),
                 new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.UserData, userData)
+                new Claim(ClaimTypes.Actor, userData)
             };
 
             if (permissions?.Count > 0)
@@ -73,7 +73,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
             string token = tokenHandler.CreateToken(new SecurityTokenDescriptor
             {
                 Issuer = currentIssuer,
-                Audience = "TESTE", //TODO
+                Audience = _globalSettings.Identity.Audience,
                 Subject = new ClaimsIdentity(claims),
                 Expires = expires,
                 SigningCredentials = signingCredentials
@@ -101,7 +101,7 @@ namespace MinhaLoja.Infra.Api.Identity.Services
                 new TokenValidationParameters
                 {
                     ValidIssuer = currentIssuer,
-                    ValidAudience = "TESTE", //TODO
+                    ValidAudience = _globalSettings.Identity.Audience,
                     IssuerSigningKey = signingCredentials.Key
                 });
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Core.Infra.Identity.Services;
 using MinhaLoja.Core.Infra.Services.LogHandler;
 using MinhaLoja.Core.Infra.Services.LogHandler.Models;
@@ -32,13 +33,27 @@ namespace MinhaLoja.Infra.Api.StartupConfigurations
                         Path = exceptionHandlerPathFeature.Path,
                         UserId = userId
                     };
-                    await errorHandler.SendAsync(error: error);
+                    await errorHandler.SendAsync(error);
 
-                    context.Response.ContentType = "text/html";
 
-                    await context.Response.WriteAsync("<html lang=\"pt-BR\"><body>\r\n");
-                    await context.Response.WriteAsync("ERRO!<br><br>\r\n");
-                    await context.Response.WriteAsync("</body></html>\r\n");
+
+
+                    string message = "Ocorreu um erro na execução da requisição";
+                    if (exceptionHandlerPathFeature.Error is DomainException)
+                    {
+                        message = exceptionHandlerPathFeature.Error.Message;
+                    }
+                    else
+                    {
+                        if (globalSettings.Environment != Environments.Production)
+                        {
+                            message = exceptionHandlerPathFeature.Error.Message;
+                        }
+                    }
+
+                    context.Response.ContentType = "application/json";
+
+                    await context.Response.WriteAsync(message);
                 });
             });
 

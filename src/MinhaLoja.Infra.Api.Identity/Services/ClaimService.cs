@@ -8,19 +8,19 @@ namespace MinhaLoja.Infra.Api.Identity.Services
 {
     public class ClaimService : IClaimService
     {
-        public string GetUserData(ClaimsPrincipal user)
-        {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.UserData)?.Value;
-        }
-
         public string GetUserId(ClaimsPrincipal user)
         {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
+            return GetValueClaim(user, ClaimTypes.NameIdentifier);
+        }
+
+        public string GetUserData(ClaimsPrincipal user)
+        {
+            return GetValueClaim(user, ClaimTypes.Actor);
         }
 
         public string GetSellerId(ClaimsPrincipal user)
         {
-            return user?.Claims.FirstOrDefault(claim => claim.Type == "SellerId")?.Value;
+            return GetValueClaim(user, "SellerId");
         }
 
         public IEnumerable<Claim> GetClaims(string tokenJwt)
@@ -29,6 +29,25 @@ namespace MinhaLoja.Infra.Api.Identity.Services
             JwtSecurityToken jwtSecurityToken = tokenHandler.ReadJwtToken(tokenJwt.Replace("Bearer", "").Trim());
 
             return jwtSecurityToken.Claims;
+        }
+
+
+        private string GetValueClaim(
+            ClaimsPrincipal user,
+            string claimType)
+        {
+            if (user == null)
+            {
+                return "";
+            }
+
+            var claim = user.Claims.FirstOrDefault(claim => claim.Type == claimType);
+            if (claim == null)
+            {
+                return "";
+            }
+
+            return claim.Value;
         }
     }
 }
