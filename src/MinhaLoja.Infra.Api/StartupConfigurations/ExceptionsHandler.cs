@@ -33,7 +33,7 @@ namespace MinhaLoja.Infra.Api.StartupConfigurations
                         Path = exceptionHandlerPathFeature.Path,
                         UserId = userId
                     };
-                    await errorHandler.SendAsync(error);
+                    //await errorHandler.SendAsync(error);
 
 
 

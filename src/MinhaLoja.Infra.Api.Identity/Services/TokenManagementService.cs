@@ -107,5 +107,19 @@ namespace MinhaLoja.Infra.Api.Identity.Services
 
             return result.IsValid;
         }
+
+        public string CurrentUser(string token)
+        {
+            var tokenHandler = new JsonWebTokenHandler();
+
+            var jsonWebToken = tokenHandler.ReadJsonWebToken(token);
+
+            if (jsonWebToken == null)
+            {
+                return null;
+            }
+
+            return jsonWebToken.Claims.First(claim => claim.Type == ClaimTypes.Actor).Value;
+        }
     }
 }

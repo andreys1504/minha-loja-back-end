@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MinhaLoja.Api.Identity.Models;
+using Microsoft.Extensions.Primitives;
 using MinhaLoja.Api.Identity.Models.RequestApi.Account.Authenticate;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
-using MinhaLoja.Core.Domain.Exceptions;
 using MinhaLoja.Core.Infra.Identity.Services;
 using MinhaLoja.Core.Settings;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Autenticacao;
-using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.UsuarioAdministrador.Validacao;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MinhaLoja.Api.Identity.Controllers
@@ -31,6 +28,7 @@ namespace MinhaLoja.Api.Identity.Controllers
             _tokenService = tokenService;
             _claimService = claimService;
         }
+
 
         [HttpPost]
         [Route("authenticate")]
@@ -59,57 +57,29 @@ namespace MinhaLoja.Api.Identity.Controllers
             return Ok(responseAction);
         }
 
+
         [HttpGet]
         [Route("refresh-token")]
-        public async Task<IActionResult> RefreshToken(
-            [FromServices] GlobalSettings globalSettings)
+        public IActionResult RefreshToken()
         {
-            string tokenJwt = Request.Headers["Authorization"].ToString();
-            if (string.IsNullOrWhiteSpace(tokenJwt))
+            KeyValuePair<string, StringValues> bearerToken = Request.Headers.FirstOrDefault(header => header.Key == "Authorization");
+            if (bearerToken.Equals(default(KeyValuePair<string, StringValues>)))
             {
-                return StatusCode(401);
+                return StatusCode((int)HttpStatusCode.Unauthorized);
             }
 
-            string urlValidarToken = $"{globalSettings.UrlApiAdminLoja}/{globalSettings.UrlValidateTokenAdminLoja}";
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", tokenJwt.Replace("Bearer", "").Replace("bearer", "").TrimString());
-            HttpResponseMessage respostaValidacao = await httpClient.GetAsync(urlValidarToken);
-            if (respostaValidacao.IsSuccessStatusCode == false)
-            {
-                return StatusCode(401);
-            }
+            string token = bearerToken.Value.First().Replace("Bearer", "").Trim();
 
-
-            IEnumerable<Claim> claims = _claimService.GetClaims(tokenJwt: tokenJwt);
-
-            if (claims == null)
-            {
-                throw new DomainException("Erro RefreshToken");
-            }
-
-            var user = JsonConvert.DeserializeObject<UsuarioProfissionalAutenticado>(
-                    _claimService.GetUserData(new ClaimsPrincipal(new ClaimsIdentity(claims)))
-            );
-
-            var request = new ValidacaoUsuarioAutenticadoRequest(
-                idUsuario: user.IdUsuario,
-                username: user.Username);
-
-            var response = (IResponseAppService<ValidacaoUsuarioAutenticadoDataResponse>)
-                await SendRequestService(request);
-
-            if (response.Success == false)
-            {
-                return StatusCode(400, response.Notifications[0]);
-            }
+            var usuario = JsonConvert
+                            .DeserializeObject<AutenticacaoUsuarioAdministradorDataResponse>(_tokenService.CurrentUser(token));
 
             var responseAction = GenerateToken(
-                userId: user.IdUsuario,
-                sellerId: response.Data.IdVendedor,
-                username: response.Data.Username,
-                userData: response.Data,
-                permissions: response.Data.Permissoes);
+                userId: usuario.IdUsuario,
+                sellerId: usuario.IdVendedor,
+                username: usuario.Username,
+                userData: usuario,
+                permissions: usuario.Permissoes);
+
 
             return Ok(responseAction);
         }

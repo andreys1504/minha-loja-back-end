@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MinhaLoja.Core.Domain.ApplicationServices.Request;
-using MinhaLoja.Core.Mediator;
+using MinhaLoja.Core.Domain.Mediator;
 using System.Threading.Tasks;
 
 namespace MinhaLoja.Api.Identity.Controllers

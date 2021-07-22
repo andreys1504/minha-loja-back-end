@@ -2,7 +2,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
-using MinhaLoja.Core.Mediator;
+using MinhaLoja.Core.Domain.Mediator;
 using MinhaLoja.Domain.ContaUsuarioAdministrador.ApplicationServices.Vendedor.ExcluirVendedorCadastroRejeitado;
 using System;
 

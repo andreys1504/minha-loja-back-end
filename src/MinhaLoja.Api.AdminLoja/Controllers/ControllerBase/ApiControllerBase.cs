@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Caching.Distributed;
 using MinhaLoja.Core.Domain.ApplicationServices.Request;
 using MinhaLoja.Core.Domain.ApplicationServices.Response;
+using MinhaLoja.Core.Domain.Mediator;
 using MinhaLoja.Core.Infra.Identity.Services;
-using MinhaLoja.Core.Mediator;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;

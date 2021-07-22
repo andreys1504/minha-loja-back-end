@@ -53,7 +53,8 @@ namespace MinhaLoja.Api.AdminLoja
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandlerApplication();
+                //app.UseDeveloperExceptionPage();
                 app.UseCors(cors => cors
                     .AllowAnyMethod()
                     .AllowAnyOrigin()

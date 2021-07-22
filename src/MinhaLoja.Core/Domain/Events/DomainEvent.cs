@@ -11,7 +11,7 @@ namespace MinhaLoja.Core.Domain.Events
         public Guid AggregateRootId { get; set; }
         public Guid? UserId { get; set; }
 
-        //'DomainEventFactory': devido a problemas de deserialização quando da existencia de ctor.
+        //'DomainEventFactory': devido a problemas de deserialização quando da existência de ctor.
         public void DomainEventFactory(
             Guid aggregateRootId,
             Guid? userId)

@@ -1,4 +1,4 @@
-﻿using MinhaLoja.Core.Mediator;
+﻿using MinhaLoja.Core.Domain.Mediator;
 using MinhaLoja.Core.Messages;
 using System.Threading.Tasks;
 
@@ -6,12 +6,12 @@ namespace MinhaLoja.Tests.Fakes.Mediator
 {
     public class MediatorHandlerFake : IMediatorHandler
     {
-        public Task SendEventToBusAsync<TEvent>(TEvent @event) where TEvent : IEvent
+        public Task SendDomainEventToBusAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
             return Task.CompletedTask;
         }
 
-        public Task SendEventToHandlersAsync(object @event)
+        public Task SendDomainEventToHandlersAsync(object @event)
         {
             return Task.CompletedTask;
         }

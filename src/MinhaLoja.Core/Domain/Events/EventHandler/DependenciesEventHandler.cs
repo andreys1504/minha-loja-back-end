@@ -1,5 +1,5 @@
-﻿using MinhaLoja.Core.Infra.Data;
-using MinhaLoja.Core.Mediator;
+﻿using MinhaLoja.Core.Domain.Mediator;
+using MinhaLoja.Core.Infra.Data;
 
 namespace MinhaLoja.Core.Domain.Events.EventHandler
 {

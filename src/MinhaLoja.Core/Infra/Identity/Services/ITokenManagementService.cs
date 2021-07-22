@@ -18,5 +18,7 @@ namespace MinhaLoja.Core.Infra.Identity.Services
             string token,
             string requestScheme,
             string requestHost);
+
+        string CurrentUser(string token);
     }
 }

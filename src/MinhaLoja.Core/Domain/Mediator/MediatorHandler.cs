@@ -4,7 +4,7 @@ using MinhaLoja.Core.Messages;
 using MinhaLoja.Core.Settings;
 using System.Threading.Tasks;
 
-namespace MinhaLoja.Core.Mediator
+namespace MinhaLoja.Core.Domain.Mediator
 {
     public class MediatorHandler : IMediatorHandler
     {
@@ -22,10 +22,13 @@ namespace MinhaLoja.Core.Mediator
             _mediator = mediator;
         }
 
-        public async Task SendEventToBusAsync<TEvent>(TEvent @event) where TEvent : IEvent
+        public async Task SendDomainEventToBusAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
             if (_globalSettings.PublishEventsInBus == false)
-                await SendEventToHandlersAsync(@event);
+            {
+                await SendDomainEventToHandlersAsync(@event);
+                return;
+            }
 
             await _serviceBusManagement.SendMessageToQueue(
                 connectionStringSend: _globalSettings.ServiceBus.EventQueue.ConnectionStringSend,
@@ -33,7 +36,7 @@ namespace MinhaLoja.Core.Mediator
                 queueName: _globalSettings.ServiceBus.EventQueue.QueueName);
         }
 
-        public async Task SendEventToHandlersAsync(object @event)
+        public async Task SendDomainEventToHandlersAsync(object @event)
         {
             await _mediator.Publish(@event);
         }

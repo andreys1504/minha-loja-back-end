@@ -17,7 +17,7 @@ namespace MinhaLoja.Tests.Fakes.Infra.Data.Repositories
             IList<TAggregateRoot> entities,
             IQueryable<IAggregate> entitiesAggregate = null)
         {
-            _entities = entities;
+            _entities = entities ?? new List<TAggregateRoot>();
             _entitiesAggregate = entitiesAggregate;
         }
 

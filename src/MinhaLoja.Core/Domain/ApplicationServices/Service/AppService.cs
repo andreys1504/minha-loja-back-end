@@ -28,7 +28,7 @@ namespace MinhaLoja.Core.Domain.ApplicationServices.Service
                     aggregateRootId: aggregateRoot.Id2,
                     userId: aggregateRoot.IdUsuarioUltimaAtualizacao);
 
-                await _dependenciesAppService.MediatorHandler.SendEventToBusAsync(@event);
+                await _dependenciesAppService.MediatorHandler.SendDomainEventToBusAsync(@event);
             }
         }
 

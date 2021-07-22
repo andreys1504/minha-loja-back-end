@@ -4,10 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MinhaLoja.Core.Domain.Events;
+using MinhaLoja.Core.Domain.Mediator;
 using MinhaLoja.Core.Infra.Data.EventStore;
 using MinhaLoja.Core.Infra.Services.LogHandler;
 using MinhaLoja.Core.Infra.Services.LogHandler.Models;
-using MinhaLoja.Core.Mediator;
 using MinhaLoja.Core.Settings;
 using Newtonsoft.Json;
 using System;
@@ -109,7 +109,7 @@ namespace MinhaLoja.Worker.DomainEventsReceiver
                         await eventStoreRepository.SaveAsync(storedDomainEvent);
 
                         var mediatorHandler = scope.ServiceProvider.GetService<IMediatorHandler>();
-                        await mediatorHandler.SendEventToHandlersAsync(@event);
+                        await mediatorHandler.SendDomainEventToHandlersAsync(@event);
                     }
                 }
             }
